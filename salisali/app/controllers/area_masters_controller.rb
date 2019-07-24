@@ -1,0 +1,2 @@
+class AreaMastersController < ApplicationController
+end
