@@ -11,6 +11,13 @@
     <td><%= stock.goods_master.goods_name %></td>
     <td><%= stock.goods_master.price %></td>
     <td><%= stock.goods_master.about %></td>
+    <%= form_for :order do |f| %>
+    <td　hidden><%=f.hidden_field :user_id, value: @current_user.id %></td>
+    <td hidden><%=f.hidden_field :goods_name, value: stock.goods_master.id%></td>
+    <td><%=f.number_field :amount, placeholder: 'enter amount'%></td>
   </tr>
+  <%=f.submit %>
+  <% end %>
+
   <% end %>
 </table>
