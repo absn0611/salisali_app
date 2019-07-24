@@ -1,11 +1,16 @@
 <h1>商品一覧</h1>
 <table>
+    <tr>
+        <th>商品名</th>
+        <th>価格(peso)</th>
+        <th>説明</th>
+        <th>注文個数</th>
+    </tr>
 <% @stocks.each do |stock| %>
   <tr>
     <td><%= stock.goods_master.goods_name %></td>
     <td><%= stock.goods_master.price %></td>
     <td><%= stock.goods_master.about %></td>
-
   </tr>
   <% end %>
 </table>
