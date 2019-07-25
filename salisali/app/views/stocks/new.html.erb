@@ -1,23 +1,27 @@
 <h1>商品一覧</h1>
-<table>
+<%= form_with(model: @order, local: true, url: stocks_path ) do |f| %>
+
+    <table>
     <tr>
         <th>商品名</th>
         <th>価格(peso)</th>
         <th>説明</th>
         <th>注文個数</th>
     </tr>
-<% @stocks.each do |stock| %>
   <tr>
+
+  <% @stocks.each do |stock| %>
+
     <td><%= stock.goods_master.goods_name %></td>
     <td><%= stock.goods_master.price %></td>
     <td><%= stock.goods_master.about %></td>
-    <%= form_for :order do |f| %>
-    <td　hidden><%=f.hidden_field :user_id, value: @current_user.id %></td>
-    <td hidden><%=f.hidden_field :goods_name, value: stock.goods_master.id%></td>
-    <td><%=f.number_field :amount, placeholder: 'enter amount'%></td>
+    <td　hidden><%＃＃=f.hidden_field :user_id, value: @current_user.id %></td>
+    <td><%=f.number_field :"#{stock.goods_master_id}", placeholder: 'enter amount' %></td>
   </tr>
-  <%=f.submit %>
   <% end %>
+  
+</table>
+
+<td><%=f.submit %></td>
 
   <% end %>
-</table>

@@ -8,4 +8,7 @@ class OrdersController < ApplicationController
 
     def create
     end
+
+    def edit
+    end
 end

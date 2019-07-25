@@ -1,5 +1,14 @@
+# coding: utf-8
+
 class StocksController < ApplicationController
-  def index
+  def new
     @stocks = Stock.all
   end
+
+  def show
+    @stocks = Stock.all
+  end
+
+
+
 end

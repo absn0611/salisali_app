@@ -1,0 +1,23 @@
+<h2>注文確認画面stocks</h2>
+    <table>
+    <tr>
+        <th>商品名</th>
+        <th>価格(peso)</th>
+        <th>説明</th>
+        <th>注文個数</th>
+    </tr>
+  <tr>
+
+  <% @stocks.each do |stock| %>
+    <td><%= stock.goods_master.goods_name %></td>
+    <td><%= stock.goods_master.price %></td>
+    <td><%= stock.goods_master.about %></td>
+    <td><%= params[:"#{stock.id}"] %></td> 
+    </tr>
+  <% end %>
+  
+</table>
+
+
+
+    
