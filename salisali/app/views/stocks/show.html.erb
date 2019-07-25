@@ -9,12 +9,17 @@
   <tr>
 
   <% @stocks.each do |stock| %>
+    <% if params[:"#{stock.id}"]=="" or params[:"#{stock.id}"] =="0" %>
+    <% else %>
     <td><%= stock.goods_master.goods_name %></td>
     <td><%= stock.goods_master.price %></td>
     <td><%= stock.goods_master.about %></td>
     <td><%= params[:"#{stock.id}"] %></td> 
     </tr>
+    <% end %>
+    
   <% end %>
+
   
 </table>
 

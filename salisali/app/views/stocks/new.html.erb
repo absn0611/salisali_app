@@ -16,7 +16,7 @@
     <td><%= stock.goods_master.price %></td>
     <td><%= stock.goods_master.about %></td>
     <td　hidden><%＃＃=f.hidden_field :user_id, value: @current_user.id %></td>
-    <td><%=f.number_field :"#{stock.goods_master_id}", placeholder: 'enter amount' %></td>
+    <td><%=f.number_field :"#{stock.goods_master_id}", value:0 %></td>
   </tr>
   <% end %>
   
