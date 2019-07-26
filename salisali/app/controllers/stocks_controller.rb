@@ -6,9 +6,8 @@ class StocksController < ApplicationController
   end
 
   def show
-    @stocks = Stock.all
+      @stocks = Stock.all
+      # render plain: params.inspect
   end
-
-
 
 end
