@@ -17,11 +17,11 @@
     <td><%= stock.goods_master.price %></td>
     <td><%= stock.goods_master.about %></td>
     <td><%= params[:"#{stock.id}"] %></td>
-    <td hidden><%=f.hidden_field :user_id, value: @current_user.id %></td>
-    <td hidden><%=f.hidden_field :goods_master_id, value: "#{stock.id}" %></td>
-    <td hidden><%=f.hidden_field :amount, value: params[:"#{stock.id}"]%></td>
-    <td hidden><%=f.hidden_field :created_at, value: Time.current %></td>
-    <td hidden><%=f.hidden_field :delivery_date, value: Time.current.since(7.days) %></td>
+    <td hidden><%=f.hidden_field :"user_id[]", value: @current_user.id %></td>
+    <td hidden><%=f.hidden_field :"goods_master_id[]", value: "#{stock.id}" %></td>
+    <td hidden><%=f.hidden_field :"amount[]", value: params[:"#{stock.id}"]%></td>
+    <td hidden><%=f.hidden_field :"created_at[]", value: Time.current %></td>
+    <td hidden><%=f.hidden_field :"delivery_date[]", value: Time.current.since(7.days) %></td>
 
     </tr>
     <% end %>
