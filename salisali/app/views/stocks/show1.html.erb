@@ -1,0 +1,38 @@
+<h2>注文確認画面stocks</h2>
+<%= form_with(model: @order, local: true, url: orders_path ) do |f| %>
+
+    <table>
+    <tr>
+        <th>商品名</th>
+        <th>価格(peso)</th>
+        <th>説明</th>
+        <th>注文個数</th>
+    </tr>
+  <tr>
+  <% @stocks.each do |stock| %>
+    <% if params[:"#{stock.id}"]=="" or params[:"#{stock.id}"] =="0" %>
+    <% else %>
+    <td><%= stock.goods_master.goods_name %></td>
+    <td><%= stock.goods_master.price %></td>
+    <td><%= stock.goods_master.about %></td>
+    <td><%= params[:"#{stock.id}"] %></td>
+    <td hidden><%=f.hidden_field :"user_id[]", value: @current_user.id %></td>
+    <td hidden><%=f.hidden_field :"goods_master_id[]", value: "#{stock.id}" %></td>
+    <td hidden><%=f.hidden_field :"amount[]", value: params[:"#{stock.id}"]%></td>
+    <td hidden><%=f.hidden_field :"created_at[]", value: Time.current %></td>
+    <td hidden><%=f.hidden_field :"delivery_date[]", value: Time.current.since(7.days) %></td>
+
+    </tr>
+    <% end %>
+    <% end %>
+
+  
+</table>
+<td><%=f.submit %></td>
+<% end %>
+
+
+
+
+
+    

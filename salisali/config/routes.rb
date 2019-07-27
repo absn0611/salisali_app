@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   post    'login',   to: 'sessions#create'
   delete  'logout',  to: 'sessions#destroy'
   resources :users
-  post    'stocks',   to: 'stocks#show'
+  post    'stocks',   to: 'stocks#create'
   get    'stocks',   to: 'stocks#show'
   post 'orders', to: 'orders#create'
 
