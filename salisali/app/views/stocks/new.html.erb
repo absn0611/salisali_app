@@ -21,7 +21,6 @@
     <td hidden><%=f.hidden_field :"goods_master_id[]", value: "#{stock.goods_master.id}" %></td>
     <td hidden><%=f.hidden_field :"about[]", value: "#{stock.goods_master.about}" %></td>
 
-    <td hidden><%=f.hidden_field :"goods_master_id[]", value: "#{stock.id}" %></td>
     <td><%=f.number_field :"amount[]" %></td>
   </tr>
   <% end %>
