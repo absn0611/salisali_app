@@ -21,13 +21,10 @@ class StocksController < ApplicationController
 
         # render plain: params.inspect
       else
-
-
-
         render 'show'
-                # render plain: params.inspect
-
       end
+    # end
+      # end
   end
 
 end
