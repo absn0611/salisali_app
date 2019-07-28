@@ -16,6 +16,11 @@
     <td><%= stock.goods_master.price %></td>
     <td><%= stock.goods_master.about %></td>
     <td hidden><%=f.hidden_field :"user_id[]", value: @current_user.id %></td>
+    <td hidden><%=f.hidden_field :"goods_name[]", value: "#{stock.goods_master.goods_name}" %></td>
+    <td hidden><%=f.hidden_field :"price[]", value: "#{stock.goods_master.price}" %></td>
+    <td hidden><%=f.hidden_field :"goods_master_id[]", value: "#{stock.goods_master.id}" %></td>
+    <td hidden><%=f.hidden_field :"about[]", value: "#{stock.goods_master.about}" %></td>
+
     <td hidden><%=f.hidden_field :"goods_master_id[]", value: "#{stock.id}" %></td>
     <td><%=f.number_field :"amount[]" %></td>
   </tr>
@@ -27,6 +32,5 @@
 <% if params[:amount] %>
 <p>「注文する商品を選択してください」</p>
 <% end %>
-
   <% end %>
 
