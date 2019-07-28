@@ -1,38 +1,16 @@
-<h2>注文確認画面stocks</h2>
-<%= form_with(model: @order, local: true, url: orders_path ) do |f| %>
+<h1>タイトル１２</h1>
+<table>
+<tr>
+    <th>商品名</th>
+    <th>価格(peso)</th>
+    <th>説明</th>
+    <th>注文個数</th>
+</tr>
+<tr>
+<td><%=params[:amount]%></td>
+<td></td>
+<td></td>
+<td></td>
 
-    <table>
-    <tr>
-        <th>商品名</th>
-        <th>価格(peso)</th>
-        <th>説明</th>
-        <th>注文個数</th>
-    </tr>
-  <tr>
-    <% params[:amount].count.times do |i| %>
-    <% if params[:amount][i]=="" or params[:amount][i]=="0" %> 
-    <% else %>
-    <td><%= params[:goods_name][i] %></td>
-    <td><%= params[:price][i] %></td>
-    <td><%= params[:about][i] %></td>
-    <td><%= params[:amount][i] %></td>
-
-    <td hidden><%=f.hidden_field :"user_id[]", value: @current_user.id %></td>
-    <td hidden><%=f.hidden_field :"goods_master_id[]", value: params[:goods_master_id][i] %></td>
-    <td hidden><%=f.hidden_field :"amount[]", value: params[:amount][i] %></td>
-
-
-    </tr>
-    <% end %>
-    <% end %>
-
-  
+</tr>
 </table>
-<td><%=f.submit %></td>
-<% end %>
-
-
-
-
-
-    
