@@ -5,11 +5,6 @@ class StocksController < ApplicationController
     @stocks = Stock.all
   end
 
-  def show
-      @stocks = Stock.all
-      # render plain: params.inspect
-  end
-
   def create
 
       if params[:amount].map(&:to_i).sum == 0 or params[:amount].map(&:to_i).sum == nil

@@ -1,14 +1,21 @@
 class OrdersController < ApplicationController
+
     def index
-        @orders = Order.all
+        if params[:amount].map(&:to_i).sum == 0 or params[:amount].map(&:to_i).sum == nil
+            @orders = params
+            
+            redirect_to root_path, notice: '注文する商品を指定してください' 
+        end
+
     end
 
+    
     def new
     end
 
     def create
         if  params[:amount]
-            params[:user_id].count.times do |i|
+            params[:goods_master_id].count.times do |i|
                 if params[:amount][i] == 0 or params[:amount][i] == nil
 
                 else
