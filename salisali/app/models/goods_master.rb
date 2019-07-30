@@ -1,4 +1,3 @@
 class GoodsMaster < ApplicationRecord
-    has_one :stock
-    has_many :orders
+    has_one :stock, :through => :orders
 end

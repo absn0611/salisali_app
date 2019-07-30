@@ -3,8 +3,6 @@ class Order < ApplicationRecord
     belongs_to :user
 
     validates :amount, numericality: {
-            only_integer: true, greater_than_or_equal_to: 0
+            only_integer: true, greater_than_or_equal_to: 1
           }
-
-        
 end
