@@ -22,11 +22,11 @@ class OrdersController < ApplicationController
 
                     @order = Order.new(user_id:@current_user.id, goods_master_id:params[:goods_master_id][i], amount:params[:amount][i],delivery_date:Time.current.since(7.days))
                     # @order = Stock.create(goods_master_id:"J002-02",quantity_of_stock:"200")
-                    # @order.save
+                    @order.save
                     # @stock = Order.Stock.update(goods_master_id:params[:goods_master_id][i], quantity_of_stock:15)
                     # redirect_to stock_path(@order.goods_master_id)
-                    render plain: @order.stock.inspect
-                    return
+                    # render plain: @order.stock.inspect
+                    # return
                 end
                 
             end
