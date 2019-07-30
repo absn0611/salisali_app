@@ -19,11 +19,19 @@ class OrdersController < ApplicationController
                     user_id:@current_user.id, 
                     goods_master_id:params[:goods_master_id][i], 
                     amount:params[:amount][i],
-                    delivery_date:Time.current.since(7.days)
+                    delivery_date:Time.current.since(delivery_c)
                     )
                     
                 @order.save
 
+                @user = User.find(@current_user.id)
+                render plain: 
+                # @current_user.area_master_id
+                # @current_user
+                @order.inspect
+                # @user.area_master.distance_from_store
+                # .inspect
+                return
         end
 
         params[:goods_master_id].count.times do |i| 
@@ -38,6 +46,24 @@ class OrdersController < ApplicationController
                 
         end
 
+    end
+
+    private
+
+    def delivery_c
+        @user = User.find(@current_user.id)
+
+        if @user.area_master.distance_from_store <= 50
+            1.day
+        else
+            if @user.area_master.distance_from_store > 50 and @user.area_master.distance_from_store <= 200
+                2.days
+            else
+                if @user.area_master.distance_from_store > 200
+                    7.days        
+                end
+            end
+        end
     end
 
 end
