@@ -9,9 +9,6 @@ class OrdersController < ApplicationController
 
     end
     
-    def new
-    end
-
     def create
 
         if params[:amount].sum == 0 or params[:amount].sum == nil
@@ -43,7 +40,4 @@ class OrdersController < ApplicationController
 
     end
 
-    
-    def edit
-    end
 end
