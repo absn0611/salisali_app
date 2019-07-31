@@ -24,14 +24,14 @@ class OrdersController < ApplicationController
                     
                 @order.save
 
-                @user = User.find(@current_user.id)
-                render plain: 
-                # @current_user.area_master_id
-                # @current_user
-                @order.inspect
+                # @user = User.find(@current_user.id)
+                # render plain: 
+                # # @current_user.area_master_id
+                # # @current_user
+                # @order.inspect
                 # @user.area_master.distance_from_store
                 # .inspect
-                return
+                # return
         end
 
         params[:goods_master_id].count.times do |i| 
