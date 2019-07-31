@@ -1,7 +1,7 @@
 class OrdersController < ApplicationController
 
     def index
-
+        
         if params[:amount].map(&:to_i).sum == 0 or params[:amount].map(&:to_i).sum == nil
 
             redirect_to root_path, notice: '注文する商品を指定してください' 
@@ -9,34 +9,33 @@ class OrdersController < ApplicationController
         end
 
         @stocks = Stock.all
+        @alert = []
         params[:goods_name].count.times do |i| 
             
             if params[:amount][i].to_i > @stocks[i].quantity_of_stock
-                @alert = []
                 @alert.push(
-                    [params[:goods_master_id][i],params[:amount][i].to_i,@stocks[i].quantity_of_stock]
+                params[:goods_name][i].to_s + "の在庫数" + @stocks[i].quantity_of_stock.to_s + "個"
                 )
             end
-            
-            
-        # redirect_to root_path, notice: '注文する商品を指定してください' 
-
-
-        
         end
 
-        # render plain:
-        #         @alert.inspect
-        #         #  (params[:amount][0].to_i + @stocks[0].quantity_of_stock).inspect
-        #         # # params[:goods_name].count.inspect
-        #         return
         if 
-            @alert != nil
-            flash[:notice] = '在庫が不足しています'
-            # redirect_to root_path
-            redirect_to root_path(@alert)
+            @alert != []
+            flash[:notice] = "申し訳ありません。次の商品の在庫が不足しております、再度ご指定ください"
+            flash[:notice2] = @alert
+             params[:goods_master_id].count.times do |i| 
+                @order = Order.new(
+                    user_id:@current_user.id, 
+                    goods_master_id:params[:goods_master_id][i], 
+                    amount:params[:amount][i],
+                    delivery_date:Time.current.since(delivery_c)
+                    )
+             end
+            redirect_to root_path
+            # render plain: @alert.count.inspect
+            # return
+            
         end
-        
 
     end
     
@@ -90,12 +89,6 @@ class OrdersController < ApplicationController
                 end
             end
         end
-    end
-
-    private
-
-    def less_stock
-        flash.now[:less_s] = "足りません"
     end
 
 end
