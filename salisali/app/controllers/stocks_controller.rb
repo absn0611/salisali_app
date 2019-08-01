@@ -3,8 +3,12 @@
 class StocksController < ApplicationController
   def new
     @stocks = Stock.all
-    @order_hoge = Order.new
   end
 
+  def index
+    @stocks = Stock.all
+  end
 
+  def create
+  end
 end

@@ -1,8 +1,11 @@
 <h1>商品一覧</h1>
-<%= form_with(model: @order, local: true, url: user_orders_path(@stocks), method: :get ) do |f| %>
+<%= form_with(model: @stock, local: true, url: new_order_path(@stocks), method: :get) do |f| %>
 <%= h(flash[:notice]) %><br>
 <%= h(flash[:notice2]) %>
-<%= @order %>
+<%= params %><br>
+# <%= params[:amount] %><br>
+
+
     <table>
     <tr>
         <th>商品名</th>
@@ -22,8 +25,10 @@
     <td hidden><%=f.hidden_field :"price[]", value: "#{stock.goods_master.price}" %></td>
     <td hidden><%=f.hidden_field :"goods_master_id[]", value: "#{stock.goods_master.id}" %></td>
     <td hidden><%=f.hidden_field :"about[]", value: "#{stock.goods_master.about}" %></td>
-
-    <td><%=f.number_field :"amount[]" %></td>
+    <td><%=f.text_field :"amount[]",value:
+    # "#{stock.goods_master.id}"
+    params[:amount]
+    %></td>
   </tr>
   <% end %>
   
@@ -34,4 +39,5 @@
 <p>「注文する商品を選択してください」</p>
 <% end %>
   <% end %>
+
 
