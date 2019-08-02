@@ -22,19 +22,14 @@ class OrdersController < ApplicationController
               @alert != []
               flash[:notice] = "申し訳ありません。次の商品の在庫が不足しております、再度ご指定ください"
               flash[:notice2] = @alert
-              redirect_to root_path
+              render "stocks/index"
               return
               
           end
     end
           
     def create
-
-        if params[:amount].sum == 0 or params[:amount].sum == nil
-            redirect_to root_path, notice: '注文する商品を指定してください' 
-        else
             
-
         params[:goods_master_id].count.times do |i| 
             @stock = Stock.find(params[:goods_master_id][i])
                 @order = Stock.where(goods_master_id:params[:goods_master_id][i]).update(
@@ -55,11 +50,8 @@ class OrdersController < ApplicationController
                     
                 @order.save
 
-        end
-                
-        end
-
-
+            end
+            
     end
 
     private
