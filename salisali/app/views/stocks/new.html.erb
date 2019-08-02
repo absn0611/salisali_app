@@ -1,21 +1,16 @@
-<h1>商品一覧</h1>
-<%= form_with(model: @stock, local: true, url: new_order_path(@stocks), method: :get) do |f| %>
+<h1>在庫登録(※在庫登録のためのページです)</h1><br>
+<h2>追加/変更</h2>
+<%= form_with(model: @stock, local: true, url: stocks_path(@stocks)) do |f| %>
 <%= h(flash[:notice]) %><br>
 <%= h(flash[:notice2]) %>
-<% if @current_user.id == 1 %>
-<p><%=link_to "在庫登録（user_id:1のみ表示)", new_stock_path %></p>
-<% end %>
-
 
   <table>
     <tr>
         <th>商品名</th>
         <th>価格(peso)</th>
         <th>説明</th>
-        <th>注文個数</th>
-        <% if @current_user.id == 1 %>
         <th>在庫数</th>
-        <% end %>
+        <th>在庫調整数</th>
     </tr>
   <tr>
 
@@ -29,29 +24,47 @@
     <td hidden><%=f.hidden_field :"price[]", value: "#{stock.goods_master.price}" %></td>
     <td hidden><%=f.hidden_field :"goods_master_id[]", value: "#{stock.goods_master.id}" %></td>
     <td hidden><%=f.hidden_field :"about[]", value: "#{stock.goods_master.about}" %></td>
-    <td>
-    <% if params[:amount] %>
-    <%=f.text_field :"amount[]",value:
-    params[:amount][params[:goods_master_id].index("#{stock.goods_master.id}")]
-    %>
-    <% else %>
-    <%=f.text_field :"amount[]" 
-    %>
-    <% end %>
-    </td>
-
-    <% if @current_user.id == 1 %>
     <td><%= stock.quantity_of_stock %></td>
-    <% end %>
+    <td><%=f.number_field :"amount[]" %></td>
+
   </tr>
   <% end %>
-  
 </table>
 
 <td><%=f.submit %></td>
-<% if params[:orders] %>
-<p>「注文する商品を選択してください」</p>
-<% end %>
   <% end %>
+
+  <br><br>
+<h2>新規登録</h2>
+
+<%= form_with(model: @stock, local: true, url: stocks_path(@stocks)) do |f| %>
+
+
+<table>
+    <tr>
+        <th>商品名</th>
+        <th>価格(peso)</th>
+        <th>説明</th>
+        <th>登録数</th>
+    </tr>
+  <tr>
+  <td><%=f.text_field :"goods_name" %></td>
+  <td><%=f.number_field :"price" %></td>
+  <td><%=f.text_area :"about" %></td>
+  <td><%=f.number_field :"quantity_of_stock" %></td>
+  <td hidden><%=f.hidden_field :"new", value: "new" %></td>
+
+
+
+
+
+  </tr>
+
+  </table>
+
+  <td><%=f.submit %></td>
+  <% end %>
+
+
 
 
