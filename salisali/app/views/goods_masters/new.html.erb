@@ -1,0 +1,50 @@
+<h1>新規登録</h1><br>
+<p>この内容でよろしければ確定ボタンを押してください</p>
+<%= params %>
+
+<h2>新規登録</h2>
+
+
+
+<table>
+    <tr>
+        <th>商品コード</th>
+        <th>商品名</th>
+        <th>価格(peso)</th>
+        <th>説明</th>
+        <th>登録数</th>
+    </tr>
+  <tr>
+  <td><%= params[:id] %></td>  
+  <td><%= params[:goods_name] %></td>
+  <td><%= params[:price] %></td>
+  <td><%= params[:about] %></td>
+  <td><%= params[:quantity_of_stock] %></td>
+
+
+
+
+
+  </tr>
+  <%= h(flash[:notice]) %><br>
+  <%= h(flash[:notice2]) %><br>
+  <%= h(flash[:notice3]) %><br>
+
+
+
+  </table>
+  <%= form_with(model: @goods_master, local: true, url: goods_masters_path(@goods_master)) do |f| %>
+  <td hidden><%=f.hidden_field :"user_id", value: "#{@current_user.id}" %></td>
+  <td hidden><%=f.hidden_field :"id", value: params[:id] %></td>
+  <td hidden><%=f.hidden_field :"goods_name", value: params[:goods_name] %></td>
+  <td hidden><%=f.hidden_field :"price", value: params[:price] %></td>
+  <td hidden><%=f.hidden_field :"about", value: params[:about] %></td>
+  <td hidden><%=f.hidden_field :"quantity_of_stock", value: params[:quantity_of_stock] %></td>
+
+
+  <td><%=f.submit "新規登録する"%></td>
+  <% end %>
+
+
+
+

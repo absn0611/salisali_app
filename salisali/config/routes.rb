@@ -9,6 +9,9 @@ Rails.application.routes.draw do
   resources :orders
   
   resources :stocks
+
+  resources :goods_masters
+  
   root 'stocks#index'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

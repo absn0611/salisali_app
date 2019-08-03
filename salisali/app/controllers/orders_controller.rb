@@ -16,12 +16,15 @@ class OrdersController < ApplicationController
                   params[:goods_name][i].to_s + "の在庫数" + @stocks[i].quantity_of_stock.to_s + "個"
                   )
               end
+            #   render plain: @stocks[i].quantity_of_stock.to_s.inspect
+            #   return
+
           end
       
           if 
               @alert != []
-              flash[:notice] = "申し訳ありません。次の商品の在庫が不足しております、再度ご指定ください"
-              flash[:notice2] = @alert
+              flash.now[:notice] = "申し訳ありません。次の商品の在庫が不足しております、再度ご指定ください"
+              flash.now[:notice2] = @alert
               render "stocks/index"
               return
               

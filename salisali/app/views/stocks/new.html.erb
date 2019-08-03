@@ -1,11 +1,11 @@
 <h1>在庫登録(※在庫登録のためのページです)</h1><br>
 <h2>追加/変更</h2>
 <%= form_with(model: @stock, local: true, url: stocks_path(@stocks)) do |f| %>
-<%= h(flash[:notice]) %><br>
-<%= h(flash[:notice2]) %>
+<%= params %>
 
   <table>
     <tr>
+        <th>商品コード</th>
         <th>商品名</th>
         <th>価格(peso)</th>
         <th>説明</th>
@@ -15,7 +15,7 @@
   <tr>
 
   <% @stocks.each do |stock| %>
-
+    <td><%= stock.goods_master.id %></td>
     <td><%= stock.goods_master.goods_name %></td>
     <td><%= stock.goods_master.price %></td>
     <td><%= stock.goods_master.about %></td>
@@ -31,7 +31,7 @@
   <% end %>
 </table>
 
-<td><%=f.submit %></td>
+<td><%=f.submit "在庫を更新" %></td>
   <% end %>
 
   <br><br>
@@ -42,27 +42,32 @@
 
 <table>
     <tr>
+        <th>商品コード</th>
         <th>商品名</th>
         <th>価格(peso)</th>
         <th>説明</th>
         <th>登録数</th>
     </tr>
   <tr>
-  <td><%=f.text_field :"goods_name" %></td>
-  <td><%=f.number_field :"price" %></td>
+  <td><%=f.text_field :"id", value: params[:id]%></td>  
+  <td><%=f.text_field :"goods_name", value: params[:goods_name]%></td>
+  <td><%=f.number_field :"price", value: params[:price] %></td>
   <td><%=f.text_area :"about" %></td>
   <td><%=f.number_field :"quantity_of_stock" %></td>
-  <td hidden><%=f.hidden_field :"new", value: "new" %></td>
+  <td hidden><%=f.hidden_field :"new_goods", value: "new_goods" %></td>
 
 
 
 
 
   </tr>
+  <%= h(flash[:notice]) %><br>
+  <%= h(flash[:notice2]) %><br>
+  <%= h(flash[:notice3]) %><br>
 
   </table>
 
-  <td><%=f.submit %></td>
+  <td><%=f.submit "新規登録する"%></td>
   <% end %>
 
 

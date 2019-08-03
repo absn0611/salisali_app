@@ -11,9 +11,32 @@ class StocksController < ApplicationController
 
   def create
 
-    if params[:new]
-      render plain: params.inspect
+    if params[:new_goods]
+      if params[:id] !="" and params[:goods_name] != "" and params[:price].to_i > 0
+      
+        render "goods_masters/new"
+        return
+      
+        # render plain: params.inspect
       # redirect_to new_stock_path
+      return
+      else
+        # redirect_to new_stock_path
+        @stocks = Stock.all
+        if params[:id] == ""
+          flash.now[:notice] = "商品コードを指定してください"
+        end
+
+        if params[:goods_name] == ""
+        flash.now[:notice2] = "商品名を指定してください"
+        end
+
+        if params[:price].to_i <= 0
+          flash.now[:notice3] = "価格を０以上の値で指定してください"
+        end
+        
+        render "stocks/new"
+      end
     else
       params[:goods_master_id].count.times do |i| 
         if params[:amount][i] == ""

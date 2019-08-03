@@ -4,6 +4,7 @@
 <%= h(flash[:notice2]) %>
 <% if @current_user.id == 1 %>
 <p><%=link_to "在庫登録（user_id:1のみ表示)", new_stock_path %></p>
+<%= params %>
 <% end %>
 
 
@@ -13,14 +14,11 @@
         <th>価格(peso)</th>
         <th>説明</th>
         <th>注文個数</th>
-        <% if @current_user.id == 1 %>
-        <th>在庫数</th>
-        <% end %>
     </tr>
   <tr>
 
   <% @stocks.each do |stock| %>
-
+    <% if stock.quantity_of_stock > 0 %>
     <td><%= stock.goods_master.goods_name %></td>
     <td><%= stock.goods_master.price %></td>
     <td><%= stock.goods_master.about %></td>
@@ -31,17 +29,15 @@
     <td hidden><%=f.hidden_field :"about[]", value: "#{stock.goods_master.about}" %></td>
     <td>
     <% if params[:amount] %>
-    <%=f.text_field :"amount[]",value:
+    <%=f.number_field :"amount[]",value:
     params[:amount][params[:goods_master_id].index("#{stock.goods_master.id}")]
     %>
     <% else %>
-    <%=f.text_field :"amount[]" 
+    <%=f.number_field :"amount[]" 
     %>
     <% end %>
     </td>
 
-    <% if @current_user.id == 1 %>
-    <td><%= stock.quantity_of_stock %></td>
     <% end %>
   </tr>
   <% end %>
