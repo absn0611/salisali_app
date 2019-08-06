@@ -31,9 +31,15 @@ class GoodsMastersController < ApplicationController
     end
 
     def update
-        @goods_master = GoodsMaster.find(params[:id])
         @goods_master = GoodsMaster.where(id: params[:id]).update(goodsmaster_params)
-        redirect_to stocks_path
+        
+        @stock = Stock.where(goods_master_id: params[:id]).update(stock_params)
+        
+        # render plain: params[:id].inspect
+        redirect_to new_stock_path
+        # return
+
+
     end
 
     private
@@ -41,6 +47,11 @@ class GoodsMastersController < ApplicationController
     def goodsmaster_params
         params.require(:goods_master).permit(:id, :goods_name, :price, :about)
     end
+
+    def stock_params
+        params.require(:goods_master).permit(:id)
+    end
+
 
 
 end
