@@ -12,7 +12,7 @@ class StocksController < ApplicationController
   def create
 
     if params[:new_goods]
-      if params[:id] !="" and params[:goods_name] != "" and params[:price].to_i > 0
+      if params[:id] !="" and params[:goods_name] != "" and params[:price].to_i > 0 and GoodsMaster.find_by(id: params[:id]) == nil and GoodsMaster.find_by(goods_name: params[:goods_name]) == nil
       
         render "goods_masters/new"
         return
@@ -23,6 +23,20 @@ class StocksController < ApplicationController
       else
         # redirect_to new_stock_path
         @stocks = Stock.all
+
+        if GoodsMaster.find_by(id: params[:id])
+
+          flash.now[:notice] = params[:id] + "は既に登録されているため登録できません。"
+          
+
+        end
+
+        if GoodsMaster.find_by(goods_name: params[:goods_name])
+
+          flash.now[:notice2] = params[:goods_name] + "は既に登録されているため登録できません。"
+          
+        end
+
         if params[:id] == ""
           flash.now[:notice] = "商品コードを指定してください"
         end
