@@ -1,7 +1,6 @@
 <h1>在庫登録(※在庫登録のためのページです)</h1><br>
 <h2>追加/変更</h2>
 <%= form_with(model: @stock, local: true, url: stocks_path(@stocks)) do |f| %>
-<%= params %>
 
   <table>
     <tr>
@@ -30,7 +29,7 @@
     <td><%= stock.quantity_of_stock %></td>
     <td><%=f.number_field :"amount[]" %></td>
     <td><%=link_to "[Edit]", edit_goods_master_path("#{stock.goods_master.id}") %></td>
-    <td><%=link_to "[×]", goods_master_path("#{stock.goods_master.id}"), method: :delete %></td>
+    <td><%=link_to "[×]", goods_master_path("#{stock.goods_master.id}"), method: :delete, data: { confirm: "#{stock.goods_master.id}" + "を本当に削除しますか？"} %></td>
 
 
   </tr>
