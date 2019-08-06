@@ -18,6 +18,29 @@ class GoodsMastersController < ApplicationController
         )
         
         redirect_to new_stock_path
-        end
+    end
+
+    def destroy
+        @goods_master = GoodsMaster.find(params[:id])
+        @goods_master.destroy
+        redirect_to new_stock_path
+    end
+
+    def edit
+        @goods_master = GoodsMaster.find(params[:id])
+    end
+
+    def update
+        @goods_master = GoodsMaster.find(params[:id])
+        @goods_master = GoodsMaster.where(id: params[:id]).update(goodsmaster_params)
+        redirect_to stocks_path
+    end
+
+    private
+
+    def goodsmaster_params
+        params.require(:goods_master).permit(:id, :goods_name, :price, :about)
+    end
+
 
 end

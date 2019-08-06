@@ -11,6 +11,9 @@
         <th>説明</th>
         <th>在庫数</th>
         <th>在庫調整数</th>
+        <th>[Edit]</th>
+        <th>[×]</th>
+
     </tr>
   <tr>
 
@@ -26,6 +29,9 @@
     <td hidden><%=f.hidden_field :"about[]", value: "#{stock.goods_master.about}" %></td>
     <td><%= stock.quantity_of_stock %></td>
     <td><%=f.number_field :"amount[]" %></td>
+    <td><%=link_to "[Edit]", edit_goods_master_path("#{stock.goods_master.id}") %></td>
+    <td><%=link_to "[×]", goods_master_path("#{stock.goods_master.id}"), method: :delete %></td>
+
 
   </tr>
   <% end %>

@@ -4,7 +4,6 @@
 <%= h(flash[:notice2]) %>
 <% if @current_user.id == 1 %>
 <p><%=link_to "在庫登録（user_id:1のみ表示)", new_stock_path %></p>
-<%= params %>
 <% end %>
 
 

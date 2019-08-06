@@ -1,0 +1,23 @@
+<h1>商品編集</h1><br>
+<%= form_with(model: @goods_master, local: true, url: goods_master_path(@goods_master)) do |f| %>
+
+    <table>
+        <tr>
+            <th>商品コード</th>
+            <th>商品名</th>
+            <th>価格</th>
+            <th>説明</th>
+        </tr>
+
+        <tr>
+
+            <td><%=f.text_field :id %></td>
+            <td><%=f.text_field :goods_name %></td>
+            <td><%=f.text_field :price %></td>
+            <td><%=f.text_field :about %></td>
+        </tr>
+
+    </table>
+
+    <td><%=f.submit "更新" %></td>
+    <% end %> 
