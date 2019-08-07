@@ -1,0 +1,39 @@
+<h1>オーダー内容変更</h1><br>
+<%= h(flash[:notice]) %><br>
+<%= h(flash[:notice2]) %>
+<%= form_with(model: @order, local: true, url: order_path(@order)) do |f| %>
+
+    <table>
+        <tr>
+            <th>オーダーID</th>
+            <th>商品コード</th>
+            <th>商品名</th>
+            <th>説明</th>
+            <th>変更後お届け予定日</th>
+            <th>注文個数</th>
+            <th>追加(取消)注文個数</th>
+
+
+        </tr>
+
+        <tr>
+
+            <td><%= @order.id %></td>
+            <td><%= @order.goods_master_id  %></td>
+            <td><%= @order.goods_master.goods_name %></td>
+            <td><%= @order.goods_master.about %></td>
+            <td><%= Date.today + @delivery_c %></td>
+            <td><%= @order.amount %></td>
+            <td><%= f.number_field :amount, value:nil%></td>
+
+            <td hidden><%=f.hidden_field :id, value: @order.id %></td>
+            <td hidden><%=f.hidden_field :goods_master_id, value: @order.goods_master_id %></td>
+            <td hidden><%=f.hidden_field :delivery_date, value: Date.today + @delivery_c  %></td>
+
+
+        </tr>
+
+    </table>
+
+    <td><%=f.submit "更新" %></td>
+    <% end %> 

@@ -7,6 +7,8 @@ class StocksController < ApplicationController
 
   def index
     @stocks = Stock.all
+
+    @orders = Order.where(user_id:@current_user.id)
   end
 
   def create
