@@ -55,8 +55,9 @@
         <th>説明</th>
         <th>お届け予定日</th> 
         <th>注文個数</th>
-        <th>[Edit]</th>
-        <th>[×]</th>
+        <th>合計金額</th>       
+        <th>注文内容変更</th>
+        <th>注文キャンセル</th>
 
     </tr>
   <% @orders.each do |order| %>
@@ -69,15 +70,24 @@
     <td><%= order.goods_master.about %></td>
     <td><%= order.delivery_date %></td>
     <td><%= order.amount %></td>
-    <td><%=link_to "[Edit]", edit_order_path("#{order.id}") %></td>
-    <td><%=link_to "[×]", order_path("#{order.id}"), method: :delete, data: { confirm: "#{order.goods_master.goods_name}" + "の注文全てキャンセルしますか？"} %></td>
+    <td><%= order.amount *  order.goods_master.price %></td>
+    <td><%=link_to "[注文個数変更]", edit_order_path("#{order.id}") %></td>
+    <td><%=link_to "[注文キャンセル]", order_path("#{order.id}"), method: :delete, data: { confirm: "#{order.goods_master.goods_name}" + "の注文全てキャンセルしますか？"} %></td>
 
     </tr>
 
 
     <% end %>
+  </table><br>
+
+  <table>
+  <tr>
+  <td>注文合計金額</td>
   
+  <td><%= @order_sum %>円</td>
+  </tr>
   </table>
+
 
 
 

@@ -9,7 +9,17 @@ class StocksController < ApplicationController
     @stocks = Stock.all
 
     @orders = Order.where(user_id:@current_user.id)
+    @order_sum = 0
+    @orders.count.times do |i|
+
+    @goods_master = GoodsMaster.find(@orders[i][:goods_master_id])
+    
+    @order_sum += @goods_master[:price] * @orders[i][:amount]
+      
+    end
+
   end
+
 
   def create
 

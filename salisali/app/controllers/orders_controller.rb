@@ -58,6 +58,8 @@ class OrdersController < ApplicationController
                 @order.save
 
             end
+
+            redirect_to root_path
             
     end
 
