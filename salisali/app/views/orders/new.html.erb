@@ -8,6 +8,8 @@
         <th>説明</th>
         <th>お届け予定日</th>
         <th>注文個数</th>
+        <th>合計</th>
+
     </tr>
   <tr>
   <% params[:amount].count.times do |i| %>
@@ -18,15 +20,30 @@
     <td><%= params[:about][i] %></td>
     <td><%= Date.today + @delivery_c %></td>
     <td><%= params[:amount][i] %></td>
+    <td><%= params[:price][i].to_i * params[:amount][i].to_i %></td>
+
 
     <td hidden><%=f.hidden_field :"user_id[]", value: @current_user.id %></td>
     <td hidden><%=f.hidden_field :"goods_master_id[]", value: params[:goods_master_id][i] %></td>
     <td hidden><%=f.hidden_field :"amount[]", value: params[:amount][i] %></td>
+    
     <% end %>
 
     </tr>
 <% end %>
   
-</table>
+</table><br>
+<table>
+<td>注文合計金額</td>
+<% @sum = 0 %>
+<% params[:amount].count.times do |i| %>
+<% @sum += params[:price][i].to_i * params[:amount][i].to_i %>
+<% end %>
+
+<td><%=  @sum %>円</td>
+
+
+  </table>
+
 <td><%= f.submit %></td>
 <% end %>

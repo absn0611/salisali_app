@@ -4,7 +4,7 @@ class OrdersController < ApplicationController
         if params[:amount].map(&:to_i).sum == 0 or params[:amount].map(&:to_i).sum == nil
 
             redirect_to root_path, notice: '注文する商品を指定してください' 
-            return
+            return  
           end
       
           @stocks = Stock.all
@@ -59,7 +59,9 @@ class OrdersController < ApplicationController
 
             end
 
-            redirect_to root_path
+
+
+            redirect_to root_path,notice: 'ご注文ありがとうございます'
             
     end
 
