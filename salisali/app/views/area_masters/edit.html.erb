@@ -1,0 +1,21 @@
+<h1>エリアマスタ編集</h1>
+<%= form_with(model: @area_master, local: true, url: area_master_path(@area_master)) do |f| %>
+
+    <table>
+        <tr>
+        <th>エリアコード</th>
+        <th>エリア名</th>
+        <th>倉庫からの距離(km)</th>
+        </tr>
+
+        <tr>
+
+            <td><%=f.text_field :id %></td>
+            <td><%=f.text_field :area_name %></td>
+            <td><%=f.number_field :distance_from_store %></td>
+        </tr>
+
+    </table>
+
+    <td><%=f.submit "更新" %></td>
+    <% end %> 

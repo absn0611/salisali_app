@@ -11,6 +11,16 @@
 
   <body>
   <div class="container">
+    <% if @current_user and @current_user.id == 1 %>
+    <p>（user_id:1のみ表示)
+    <%=link_to "商品、在庫マスタ", new_stock_path %>
+    <%=link_to "エリアマスタ", area_masters_path %>
+    </p>
+    <% else %>
+    
+
+    <% end %>
+
     <%= yield %>
     <p>
     <%=link_to "商品一覧", stocks_path %>

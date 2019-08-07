@@ -1,0 +1,53 @@
+<h1>エリアマスタ</h1>
+<h2>変更/削除</h2>
+  <table>
+    <tr>
+        <th>エリアコード</th>
+        <th>エリア名</th>
+        <th>倉庫からの距離(km)</th>
+        <th>[Edit]</th>
+        <th>[×]</th>
+
+    </tr>
+    <% @area_masters.each do |area_master| %>
+
+  <tr>
+
+    <td><%= area_master.id %></td>
+    <td><%= area_master.area_name %></td>
+    <td><%= area_master.distance_from_store %></td>
+    <td><%=link_to "[Edit]", edit_area_master_path("#{area_master.id}") %></td>
+    <td><%=link_to "[×]", area_master_path("#{area_master.id}"), method: :delete, data: { confirm: "#{area_master.id}" + "を本当に削除しますか？"} %></td>
+
+    </tr>
+
+    <% end %>
+
+  
+</table>
+
+<h2>エリアマスタ登録</h2>
+<%= form_with(model: @area_master, local: true, url: new_area_master_path(@area_master),method: :get) do |f| %>
+
+  <table>
+    <tr>
+        <th>エリアコード</th>
+        <th>エリア名</th>
+        <th>倉庫からの距離(km)</th>
+
+    </tr>
+
+  <tr>
+
+    <td><%= f.text_field :id %></td>
+    <td><%= f.text_field :area_name %></td>
+    <td><%= f.text_field :distance_from_store %></td>
+
+    </tr>  
+</table>
+<td><%=f.submit "登録" %></td>
+
+<% end %>
+
+
+
