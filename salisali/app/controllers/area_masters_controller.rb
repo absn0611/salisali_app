@@ -1,29 +1,35 @@
 class AreaMastersController < ApplicationController
     def index
+        admin_login
         @area_masters = AreaMaster.all
     end
 
     def edit
+        admin_login
         @area_master = AreaMaster.find(params[:id])
     end
 
     def destroy
+        admin_login
         @area_master = AreaMaster.find(params[:id])
         @area_master.destroy
         redirect_to area_masters_path
     end
 
     def update
+        admin_login
         @area_master = AreaMaster.where(id: params[:id]).update(areamaster_params)
 
         redirect_to area_masters_path
     end
 
     def new
+        admin_login
         # render plain: params.inspect
     end
 
     def create
+        admin_login
         @area_master = AreaMaster.create(id:params[:id],area_name:params[:area_name],distance_from_store:params[:distance_from_store])
         redirect_to area_masters_path
         # render plain: @area_master.inspect
@@ -40,6 +46,14 @@ class AreaMastersController < ApplicationController
     def areau_params
         params.require(:area_master).permit(:id)
     end
+
+    def admin_login
+        if @current_user and @current_user.admin == "true"
+        else
+          redirect_to root_path
+        end
+    end
+
 
 
 end

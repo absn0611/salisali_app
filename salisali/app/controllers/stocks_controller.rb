@@ -2,6 +2,7 @@
 
 class StocksController < ApplicationController
   def new
+    admin_login
     @stocks = Stock.all
   end
 
@@ -22,6 +23,7 @@ class StocksController < ApplicationController
 
 
   def create
+    admin_login
 
     if params[:new_goods]
       if params[:id] !="" and params[:goods_name] != "" and params[:price].to_i > 0 and GoodsMaster.find_by(id: params[:id]) == nil and GoodsMaster.find_by(goods_name: params[:goods_name]) == nil
@@ -78,4 +80,12 @@ class StocksController < ApplicationController
     end
     
   end
+
+  def admin_login
+    if @current_user and @current_user.admin == "true"
+    else
+      redirect_to root_path
+    end
+  end
+
 end

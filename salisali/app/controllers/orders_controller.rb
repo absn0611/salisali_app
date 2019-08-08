@@ -1,6 +1,7 @@
 class OrdersController < ApplicationController
 
     def index
+        admin_login
         @orders = Order.all.order(created_at: "desc")
     end
 
@@ -148,4 +149,12 @@ class OrdersController < ApplicationController
     def order_params
         params.require(:order).permit(:id,:goods_master_id,:amount,:delivery_date, :status)
     end
+
+    def admin_login
+        if @current_user and @current_user.admin == "true"
+        else
+          redirect_to root_path
+        end
+    end
+    
 end
