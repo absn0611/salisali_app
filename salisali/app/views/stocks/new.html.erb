@@ -1,7 +1,13 @@
-<h1>商品マスタ/在庫マスタ登録(※登録のためのページです)</h1><br>
+<h1>商品マスタ/在庫マスタ登録(※登録のためのページです)</h1>
+<% if flash[:notice] %>
+<div class="error">
+<%= h(flash[:notice]) %><br>
+<%= h(flash[:notice2]) %><br>
+<%= h(flash[:notice3]) %>
+</div>
+<% end %>
 <h2>追加/変更</h2>
 <%= form_with(model: @stock, local: true, url: stocks_path(@stocks)) do |f| %>
-
   <table>
     <tr>
         <th>商品コード</th>
@@ -11,7 +17,6 @@
         <th>在庫数</th>
         <th>在庫調整数</th>
         <th>[Edit]</th>
-        <th>[×]</th>
 
     </tr>
   <tr>
@@ -29,7 +34,6 @@
     <td><%= stock.quantity_of_stock %></td>
     <td><%=f.number_field :"amount[]" %></td>
     <td><%=link_to "[Edit]", edit_goods_master_path("#{stock.goods_master.id}") %></td>
-    <td><%=link_to "[×]", goods_master_path("#{stock.goods_master.id}"), method: :delete, data: { confirm: "#{stock.goods_master.id}" + "を本当に削除しますか？"} %></td>
 
 
   </tr>
@@ -39,7 +43,7 @@
 <td><%=f.submit "在庫を更新" %></td>
   <% end %>
 
-  <br><br>
+<br>
 <h2>新規登録</h2>
 
 <%= form_with(model: @stock, local: true, url: stocks_path(@stocks)) do |f| %>
@@ -66,10 +70,6 @@
 
 
   </tr>
-  <%= h(flash[:notice]) %><br>
-  <%= h(flash[:notice2]) %><br>
-  <%= h(flash[:notice3]) %><br>
-
   </table>
 
   <td><%=f.submit "新規登録する"%></td>

@@ -24,9 +24,16 @@ class GoodsMastersController < ApplicationController
 
     def destroy
         admin_login
-        @goods_master = GoodsMaster.find(params[:id])
-        @goods_master.destroy
-        redirect_to new_stock_path
+        @order = Order.where(goods_master_id:params[:id]).any?
+        
+        if @order == true
+
+            redirect_to edit_goods_master_path,notice: params[:id] + "は既にオーダーに登録があるため削除できません"
+        else
+            @goods_master = GoodsMaster.find(params[:id])
+            @goods_master.destroy
+            redirect_to new_stock_path,notice:params[:id] + "を商品マスタと在庫マスタから削除しました"
+        end
     end
 
     def edit

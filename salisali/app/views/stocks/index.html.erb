@@ -1,7 +1,9 @@
 <h1>商品一覧</h1>
 <%= form_with(model: @stock, local: true, url: new_order_path(@stocks), method: :get) do |f| %>
-<%= h(flash[:notice]) %><br>
-<%= h(flash[:notice2]) %>
+  <div class="error">
+  <%= h(flash[:notice]) %><br>
+  <%= h(flash[:notice2]) %><br>
+  </div>
 
   <table>
     <tr>

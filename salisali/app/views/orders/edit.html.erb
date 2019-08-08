@@ -1,6 +1,8 @@
 <h1>オーダー内容変更</h1><br>
+<div class="error">
 <%= h(flash[:notice]) %><br>
-<%= h(flash[:notice2]) %>
+<%= h(flash[:notice2]) %><br>
+</div>
 <%= form_with(model: @order, local: true, url: order_path(@order)) do |f| %>
 
     <table>

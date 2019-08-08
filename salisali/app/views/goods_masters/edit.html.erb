@@ -1,20 +1,24 @@
 <h1>商品編集</h1><br>
 <%= form_with(model: @goods_master, local: true, url: goods_master_path(@goods_master)) do |f| %>
-
+    <div class="error">
+<%= h(flash[:notice]) %><br>
+</div>
     <table>
         <tr>
             <th>商品コード</th>
             <th>商品名</th>
             <th>価格</th>
             <th>説明</th>
+            <th>[×]</th>
         </tr>
 
         <tr>
 
             <td><%=f.text_field :id %></td>
             <td><%=f.text_field :goods_name %></td>
-            <td><%=f.text_field :price %></td>
+            <td><%=f.number_field :price,min: 0 %></td>
             <td><%=f.text_field :about %></td>
+            <td><%=link_to "[×]", goods_master_path(params[:id]), method: :delete, data: { confirm: params[:id] + "を本当に削除しますか？"} %></td>
         </tr>
 
     </table>

@@ -29,3 +29,7 @@ th {
 h2{
 	font-size: 90%;
 }
+
+.error{
+	color: #f50303;
+}
