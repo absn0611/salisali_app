@@ -10,7 +10,7 @@ class OrdersController < ApplicationController
 
             redirect_to root_path, notice: '注文する商品を指定してください' 
             return  
-          end
+        end
       
           @stocks = Stock.all
           @alert = []

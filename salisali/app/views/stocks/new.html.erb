@@ -1,4 +1,4 @@
-<h1>在庫登録(※在庫登録のためのページです)</h1><br>
+<h1>商品マスタ/在庫マスタ登録(※登録のためのページです)</h1><br>
 <h2>追加/変更</h2>
 <%= form_with(model: @stock, local: true, url: stocks_path(@stocks)) do |f| %>
 
@@ -58,7 +58,7 @@
   <td><%=f.text_field :"goods_name", value: params[:goods_name]%></td>
   <td><%=f.number_field :"price", value: params[:price] %></td>
   <td><%=f.text_area :"about" %></td>
-  <td><%=f.number_field :"quantity_of_stock" %></td>
+  <td><%=f.number_field :"quantity_of_stock", min: 0   %></td>
   <td hidden><%=f.hidden_field :"new_goods", value: "new_goods" %></td>
 
 

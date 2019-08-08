@@ -24,11 +24,11 @@
     <td hidden><%=f.hidden_field :"about[]", value: "#{stock.goods_master.about}" %></td>
     <td>
     <% if params[:amount] %>
-    <%=f.number_field :"amount[]",value:
+    <%=f.number_field :"amount[]", min: 0 ,value:
     params[:amount][params[:goods_master_id].index("#{stock.goods_master.id}")]
     %>
     <% else %>
-    <%=f.number_field :"amount[]" 
+    <%=f.number_field :"amount[]", min: 0  
     %>
     <% end %>
     </td>
@@ -73,7 +73,6 @@
     <td><%= order.amount %></td>
     <td><%= order.amount *  order.goods_master.price %></td>
     <td><%= order.status %></td>
-    <%= order.status %>
     <td><%=link_to "[注文変更/キャンセル]", edit_order_path("#{order.id}") %></td>
     </tr>
 

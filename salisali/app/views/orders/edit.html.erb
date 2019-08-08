@@ -34,7 +34,7 @@
             <% end %>
 
             <% if @current_user and @current_user.admin == "true" %>
-            <td><%= f.select :status, ["注文中","発送準備中","発送済み","配送済み"] %></td>
+            <td><%= f.select :status, ["注文中","発送準備中","発送済み","配達完了"] %></td>
             <% else %>
             <td><%= @order.status %></td>
             <% end %>
