@@ -29,7 +29,10 @@ class OrdersController < ApplicationController
           if 
               @alert != []
               @orders = Order.where(user_id:@current_user.id)
-              redirect_to root_path,notice: "申し訳ありません。次の商品の在庫が不足しております、再度ご指定ください:" + @alert.to_s
+              flash.now[:notice] = "申し訳ありません。次の商品の在庫が不足しております、再度ご指定ください"
+              flash.now[:notice2] = @alert
+
+              render "stocks/index"
               return
               
           end
