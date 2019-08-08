@@ -35,7 +35,7 @@
             <% end %>
             <td><%=  f.text_field :mail, value:@user.mail %></td>
             <% if @current_user.admin == "true" %>
-            <td><%=  f.text_field :admin, value:@user.admin %></td>
+            <td><%=  f.select :admin, ["false", "true"],value:@user.admin %></td>
             <% end %>
 
 
