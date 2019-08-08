@@ -1,0 +1,38 @@
+<h1>オーダー情報</h1>
+<%= h(flash[:notice]) %><br>
+
+    <table>
+        <tr>
+            <th>オーダーID</th>
+            <th>ユーザーID</th>
+            <th>商品コード</th>
+            <th>商品名</th>
+            <th>注文数量</th>
+            <th>更新日時</th>
+            <th>お届け予定日</th>
+            <th>ステイタス</th>
+            <th>[Edit]</th>
+            <th>[×]</th>
+    
+        </tr>
+        <% @orders.each do |order| %>
+
+        <tr>
+
+            <td><%= order.id %></td>
+            <td><%= order.user_id  %></td>
+            <td><%= order.goods_master_id %></td>
+            <td><%= order.goods_master.goods_name %></td>
+            <td><%= order.amount %></td>
+            <td><%= order.updated_at %></td>
+            <td><%= order.delivery_date %></td>
+            <td><%= order.status %></td>
+            <td><%=link_to "変更する",edit_order_path(order.id) %></td>
+            <td><%=link_to "削除する", order_path(order.id), method: :delete, data: { confirm: "オーダーID"  + order.id.to_s + "の注文を削除しますか？"} %></td>
+
+        </tr>
+        <% end %>
+
+    </table><br>
+
+

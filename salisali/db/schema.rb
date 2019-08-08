@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_08_050137) do
+ActiveRecord::Schema.define(version: 2019_08_08_061546) do
 
   create_table "area_masters", id: :string, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "area_name"
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 2019_08_08_050137) do
     t.date "delivery_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "status"
   end
 
   create_table "stocks", primary_key: "goods_master_id", id: :string, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -49,9 +50,9 @@ ActiveRecord::Schema.define(version: 2019_08_08_050137) do
     t.string "area_master_id", limit: 191, null: false
     t.string "password_digest", limit: 191, null: false
     t.string "remember_token", limit: 191
+    t.string "admin"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "admin"
   end
 
 end

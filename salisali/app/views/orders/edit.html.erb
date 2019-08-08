@@ -12,7 +12,8 @@
             <th>変更後お届け予定日</th>
             <th>注文個数</th>
             <th>追加(取消)注文個数</th>
-
+            <th>注文キャンセル</th>
+            <th>ステイタス</th>
 
         </tr>
 
@@ -24,7 +25,20 @@
             <td><%= @order.goods_master.about %></td>
             <td><%= Date.today + @delivery_c %></td>
             <td><%= @order.amount %></td>
+            <% if @order.status != "注文中" %>
+            <td>変更できません</td>
+            <td>変更できません</td>
+            <% else %>
             <td><%= f.number_field :amount, value:nil%></td>
+            <td><%=link_to "[注文キャンセル]", order_path(@order.id), method: :delete, data: { confirm: @order.goods_master.goods_name + "の注文全てキャンセルしますか？"} %></td>
+            <% end %>
+
+            <% if @current_user and @current_user.admin == "true" %>
+            <td><%= f.select :status, ["注文中","発送準備中","発送済み","配送済み"] %></td>
+            <% else %>
+            <td><%= @order.status %></td>
+            <% end %>
+
 
             <td hidden><%=f.hidden_field :id, value: @order.id %></td>
             <td hidden><%=f.hidden_field :goods_master_id, value: @order.goods_master_id %></td>

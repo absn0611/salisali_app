@@ -1,5 +1,9 @@
 class OrdersController < ApplicationController
 
+    def index
+        @orders = Order.all.order(created_at: "desc")
+    end
+
     def new
         if params[:amount].map(&:to_i).sum == 0 or params[:amount].map(&:to_i).sum == nil
 
@@ -23,10 +27,8 @@ class OrdersController < ApplicationController
       
           if 
               @alert != []
-              flash.now[:notice] = "申し訳ありません。次の商品の在庫が不足しております、再度ご指定ください"
-              flash.now[:notice2] = @alert
               @orders = Order.where(user_id:@current_user.id)
-              render "stocks/index"
+              redirect_to root_path,notice: "申し訳ありません。次の商品の在庫が不足しております、再度ご指定ください:" + @alert.to_s
               return
               
           end
@@ -41,7 +43,7 @@ class OrdersController < ApplicationController
             @stock = Stock.find(params[:goods_master_id][i])
                 @order = Stock.where(goods_master_id:params[:goods_master_id][i]).update(
                     goods_master_id:params[:goods_master_id][i],
-                    quantity_of_stock:(@stock.quantity_of_stock - params[:amount][i].to_i)
+                    quantity_of_stock:(@stock.quantity_of_stock - params[:amount][i].to_i),
                     )
                 # # redirect_to stock_path(@order.goods_master_id)
     
@@ -52,7 +54,8 @@ class OrdersController < ApplicationController
                     user_id:@current_user.id, 
                     goods_master_id:params[:goods_master_id][i], 
                     amount:params[:amount][i],
-                    delivery_date:Time.current.since(delivery_c)
+                    delivery_date:Time.current.since(delivery_c),
+                    status:"注文中"
                     )
                     
                 @order.save
@@ -79,9 +82,17 @@ class OrdersController < ApplicationController
 
         @order = Order.find(params[:id])
         @order.destroy
-        redirect_to root_path
-        end
 
+        if @current_user.admin and @current_user.admin == "true"
+
+            redirect_to orders_path,notice:"注文を削除しました"
+            return
+        else
+
+            redirect_to root_path,notice:"注文を削除しました"
+            return
+        end
+    end
     end
 
     def update
@@ -100,11 +111,17 @@ class OrdersController < ApplicationController
         end
         @order = Order.find(params[:id])
 
-        @order = Order.where(id:params[:order][:id]).update(amount:@order.amount.to_i + params[:order][:amount].to_i,delivery_date: Date.today + delivery_c)
+        @order = Order.where(id:params[:order][:id]).update(amount:@order.amount.to_i + params[:order][:amount].to_i,delivery_date: Date.today + delivery_c, status: params[:order][:status])
         @stock = Stock.where(goods_master_id:params[:order][:goods_master_id]).update(quantity_of_stock:@stock.quantity_of_stock.to_i - params[:order][:amount].to_i)
         # render plain: 
         # @order.amount.inspect
+        if @current_user and @current_user.admin == "true"
+        redirect_to orders_path
+        return
+        else
         redirect_to root_path
+        return
+        end
 
 
 
@@ -129,6 +146,6 @@ class OrdersController < ApplicationController
     end
 
     def order_params
-        params.require(:order).permit(:id,:goods_master_id,:amount,:delivery_date)
+        params.require(:order).permit(:id,:goods_master_id,:amount,:delivery_date, :status)
     end
 end
