@@ -1,5 +1,9 @@
 <h1>ユーザー情報変更</h1>
+<% if @current_user.admin == "true" %>
+<h2>※住所およびエリアコードの変更フォームは管理者ページのみ表示されております</h2>
+<% else %>
 <h2>※住所変更を希望される方は管理者までお申し出ください</h2>
+<% end %>
 <%= form_with(model: @user, local: true, url: user_path(@current_user.id),method: :patch) do |f| %>
 
     <table>
@@ -9,6 +13,10 @@
             <th>住所</th>
             <th>エリアコード</th>
             <th>mail</th>
+            <% if @current_user.admin == "true" %>
+            <th>管理者</th>
+            <% end %>
+
 
 
         </tr>
@@ -18,9 +26,20 @@
             <td><%= @user.id %></td>
             <td hidden><%=f.hidden_field :id, value: @user.id %></td>
             <td><%=  f.text_field :name, value:@user.name  %></td>
+            <% if @current_user.admin == "true" %>
+            <td><%= f.text_field :address, value: @user.address %></td>
+            <td><%= f.text_field :area_master_id, value:@user.area_master_id%></td>
+            <% else %>
             <td><%= @user.address %></td>
             <td><%= @user.area_master_id%></td>
+            <% end %>
             <td><%=  f.text_field :mail, value:@user.mail %></td>
+            <% if @current_user.admin == "true" %>
+            <td><%=  f.text_field :admin, value:@user.admin %></td>
+            <% end %>
+
+
+
         </tr>
 
     </table><br>

@@ -29,8 +29,13 @@ class UsersController < ApplicationController
 
   def update
     # render plain: params[:id].inspect
-    @user = User.update(user_params)
-    redirect_to root_path
+    @user = User.where(id:params[:user][:id]).update(user_params)
+    # render plain: params[:user][:id].inspect
+    if @current_user.admin == "true"
+    redirect_to users_path, notice: params[:user][:name] + 'の情報を更新しました' 
+    else
+    redirect_to user_path, notice: params[:user][:name] + 'の情報を更新しました' 
+    end
   end
 
   def destroy
@@ -43,7 +48,7 @@ class UsersController < ApplicationController
   private
 
     def user_params
-      params.require(:user).permit(:name, :mail, :password, :password_confirmation, :area_master_id, :address)
+      params.require(:user).permit(:name, :mail, :password, :password_confirmation, :area_master_id, :address, :admin)
     end
 
 end
