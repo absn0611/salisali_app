@@ -12,9 +12,13 @@
   <body>
   <div class="container">
     <% if @current_user and @current_user.id == 1 %>
-    <p>（user_id:1のみ表示)
+    <p>管理者メニュー（管理者のみ表示されます)</p>
+    <p>
+    <%=link_to "ユーザ新規登録", new_user_path %>
     <%=link_to "商品、在庫マスタ", new_stock_path %>
     <%=link_to "エリアマスタ", area_masters_path %>
+    <%=link_to "サリサリマスタ", users_path %>
+
     </p>
     <% else %>
     
@@ -24,10 +28,13 @@
     <%= yield %>
     <p>
     <%=link_to "商品一覧", stocks_path %>
-    <%=link_to "新規登録", new_user_path %>
     <% if !@current_user %>
     <%=link_to "[ログイン]", root_path %>
     <% end %>
+    <% if @current_user %>
+    <%=link_to "ユーザー情報",user_path(@current_user) %><br><br>
+    <% end %>
+
     <%=link_to "[ログアウト]",logout_path, method: :delete %><br><br>
 
   </p>

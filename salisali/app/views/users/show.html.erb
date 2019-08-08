@@ -1,0 +1,26 @@
+<h1>ユーザー情報</h1>    
+
+<table>
+    <tr>
+        <th>ユーザーID</th>
+        <th>ユーザーネーム</th>
+        <th>住所</th>
+        <th>エリアコード</th>
+        <th>mail</th>
+        <th>[Edit]</th>
+
+    </tr>
+
+    <tr>
+
+        <td><%= @user.id %></td>
+        <td><%=  @user.name  %></td>
+        <td><%=  @user.address %></td>
+        <td><%=  @user.area_master_id%></td>
+        <td><%=  @user.mail %></td>
+        <td><%=link_to "変更する",edit_user_path(@user) %></td>
+
+
+    </tr>
+
+</table>

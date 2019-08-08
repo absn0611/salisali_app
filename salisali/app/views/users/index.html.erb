@@ -1,0 +1,31 @@
+<h1>ユーザー情報</h1>
+
+    <table>
+        <tr>
+            <th>ユーザーID</th>
+            <th>ユーザーネーム</th>
+            <th>住所</th>
+            <th>エリアコード</th>
+            <th>mail</th>
+            <th>[Edit]</th>
+            <th>[×]</th>
+    
+        </tr>
+        <% @users.each do |user| %>
+
+        <tr>
+
+            <td><%= user.id %></td>
+            <td><%= user.name  %></td>
+            <td><%= user.address %></td>
+            <td><%= user.area_master_id%></td>
+            <td><%= user.mail %></td>
+            <td><%=link_to "変更する",edit_user_path(user.id) %></td>
+            <td><%=link_to "削除する", user_path(user.id), method: :delete, data: { confirm: user.name + "を本当に削除しますか？"} %></td>
+
+        </tr>
+        <% end %>
+
+    </table><br>
+
+

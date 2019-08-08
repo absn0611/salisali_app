@@ -38,13 +38,14 @@
   <% end %>
   
 </table>
-
 <td><%=f.submit "注文する" %></td>
 <% if params[:orders] %>
 <p>「注文する商品を選択してください」</p>
 <% end %>
   <% end %>
   <h1>現在オーダー内容</h1>
+
+  <% if @order_sum > 0 %>
 
   <table>
     <tr>
@@ -87,6 +88,10 @@
   <td><%= @order_sum %>円</td>
   </tr>
   </table>
+  <% else %>
+  <p>現在注文はありません</p>
+
+  <% end %>
 
 
 
