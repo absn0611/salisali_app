@@ -28,7 +28,11 @@
 
 <h2>エリアマスタ登録</h2>
 <div class="error">
-<%= h(flash[:notice]) %>
+<%= h(flash[:notice]) %><br>
+<%= h(flash[:notice2]) %><br>
+<%= h(flash[:notice3]) %>
+
+
 </div>
 <%= form_with(model: @area_master, local: true, url: new_area_master_path(@area_master),method: :get) do |f| %>
 
@@ -42,9 +46,9 @@
 
   <tr>
 
-    <td><%= f.text_field :id %></td>
-    <td><%= f.text_field :area_name %></td>
-    <td><%= f.text_field :distance_from_store %></td>
+    <td><%= f.text_field :id,value:params[:id]%></td>
+    <td><%= f.text_field :area_name, value:params[:area_name] %></td>
+    <td><%= f.number_field :distance_from_store, value:params[:distance_from_store] %></td>
 
     </tr>  
 </table>
