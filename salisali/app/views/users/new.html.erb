@@ -26,7 +26,7 @@
     <%= f.label :パスワード確認 %>
     <%= f.text_field :password_confirmation %>
     </p>
-    <%= f.label :admin(※管理者を登録する時以外触らない) %>
+    <%= f.label :admin %>
     <%= f.select :admin,["false", "true"],value:"false" %>
     <p>
     <%= f.submit '登録' %>

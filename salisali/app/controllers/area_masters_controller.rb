@@ -25,6 +25,23 @@ class AreaMastersController < ApplicationController
 
     def new
         admin_login
+        if AreaMaster.where(id:params[:id]).any?
+            @area_masters = AreaMaster.all
+
+            flash.now[:notice] = params[:id] + "は既に登録されています"
+            render "index"
+        return
+        end
+
+        if AreaMaster.where(area_name:params[:area_name]).any?
+            @area_masters = AreaMaster.all
+
+            flash.now[:notice] = params[:area_name] + "は既に登録されています"
+            render "index"
+        return
+        end
+    
+    
         # render plain: params.inspect
     end
 

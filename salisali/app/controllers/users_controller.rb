@@ -8,7 +8,7 @@ class UsersController < ApplicationController
   end
 
   def new
-    admin_login
+    # admin_login
 
     @user = User.new
   end
@@ -19,10 +19,12 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
       if @user.save
         redirect_to login_path, notice: "登録しました"
+        return
 
       else
         flash.now[:notice] = "値が間違っています。"
         render 'new'
+        return
       end
   end
 
