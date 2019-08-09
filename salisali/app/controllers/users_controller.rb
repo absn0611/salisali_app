@@ -18,8 +18,10 @@ class UsersController < ApplicationController
     
     @user = User.new(user_params)
       if @user.save
-        redirect_to login_path
+        redirect_to login_path, notice: "登録しました"
+
       else
+        flash.now[:notice] = "値が間違っています。"
         render 'new'
       end
   end
