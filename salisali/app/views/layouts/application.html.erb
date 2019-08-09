@@ -14,7 +14,6 @@
     <% if @current_user and @current_user.admin == "true" %>
     <p>管理者メニュー（管理者のみ表示されます)</p>
     <p>
-    <%=link_to "ユーザ新規登録", new_user_path %>
     <%=link_to "商品、在庫マスタ", new_stock_path %>
     <%=link_to "エリアマスタ", area_masters_path %>
     <%=link_to "サリサリマスタ", users_path %>

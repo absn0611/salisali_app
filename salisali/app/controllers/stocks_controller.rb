@@ -39,8 +39,8 @@ class StocksController < ApplicationController
         if GoodsMaster.find_by(id: params[:id])
 
           flash.now[:notice] = params[:id] + "は既に登録されているため登録できません。"
-          
-
+        else
+          flash.now[:notice] = ""
         end
 
         if GoodsMaster.find_by(goods_name: params[:goods_name])

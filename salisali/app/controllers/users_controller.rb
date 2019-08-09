@@ -8,7 +8,7 @@ class UsersController < ApplicationController
   end
 
   def new
-    # admin_login
+    admin_login
 
     @user = User.new
   end
