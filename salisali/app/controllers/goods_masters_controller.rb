@@ -27,7 +27,6 @@ class GoodsMastersController < ApplicationController
         @order = Order.where(goods_master_id:params[:id]).any?
         
         if @order == true
-
             redirect_to edit_goods_master_path,notice: params[:id] + "は既にオーダーに登録があるため削除できません"
         else
             @goods_master = GoodsMaster.find(params[:id])
@@ -47,11 +46,7 @@ class GoodsMastersController < ApplicationController
         
         @stock = Stock.where(goods_master_id: params[:id]).update(stock_params)
         
-        # render plain: params[:id].inspect
         redirect_to new_stock_path
-        # return
-
-
     end
 
     private

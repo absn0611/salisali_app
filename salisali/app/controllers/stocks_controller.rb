@@ -33,12 +33,7 @@ class StocksController < ApplicationController
       
         render "goods_masters/new"
         return
-      
-        # render plain: params.inspect
-      # redirect_to new_stock_path
-      return
       else
-        # redirect_to new_stock_path
         @stocks = Stock.all
 
         if GoodsMaster.find_by(id: params[:id])

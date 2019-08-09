@@ -30,11 +30,9 @@ class AreaMastersController < ApplicationController
 
     def create
         admin_login
+
         @area_master = AreaMaster.create(id:params[:id],area_name:params[:area_name],distance_from_store:params[:distance_from_store])
         redirect_to area_masters_path
-        # render plain: @area_master.inspect
-
-
     end
 
     private
@@ -43,17 +41,11 @@ class AreaMastersController < ApplicationController
         params.require(:area_master).permit(:id, :area_name, :distance_from_store)
     end
 
-    def areau_params
-        params.require(:area_master).permit(:id)
-    end
-
     def admin_login
         if @current_user and @current_user.admin == "true"
         else
           redirect_to root_path
         end
     end
-
-
 
 end

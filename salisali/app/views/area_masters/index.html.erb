@@ -16,8 +16,8 @@
     <td><%= area_master.id %></td>
     <td><%= area_master.area_name %></td>
     <td><%= area_master.distance_from_store %></td>
-    <td><%=link_to "[Edit]", edit_area_master_path("#{area_master.id}") %></td>
-    <td><%=link_to "[×]", area_master_path("#{area_master.id}"), method: :delete, data: { confirm: "#{area_master.id}" + "を本当に削除しますか？"} %></td>
+    <td><%=link_to "[Edit]", edit_area_master_path(area_master.id) %></td>
+    <td><%=link_to "[×]", area_master_path(area_master.id), method: :delete, data: { confirm: area_master.id + "を本当に削除しますか？"} %></td>
 
     </tr>
 

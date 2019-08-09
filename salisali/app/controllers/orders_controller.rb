@@ -7,11 +7,9 @@ class OrdersController < ApplicationController
 
     def new
         if params[:amount].map(&:to_i).sum == 0 or params[:amount].map(&:to_i).sum == nil
-
             redirect_to root_path, notice: '注文する商品を指定してください' 
             return  
         end
-      
           @stocks = Stock.all
           @alert = []
           params[:goods_name].count.times do |i| 
@@ -21,23 +19,27 @@ class OrdersController < ApplicationController
                   params[:goods_name][i].to_s + "の在庫数は" + @stocks[i].quantity_of_stock.to_s + "個です"
                   )
               end
-            #   render plain: @stocks[i].quantity_of_stock.to_s.inspect
-            #   return
-
-          end
+                    
+    end
       
-          if 
-              @alert != []
-              @orders = Order.where(user_id:@current_user.id)
-              flash.now[:notice] = "申し訳ありません。次の商品の在庫が不足しております、再度ご指定ください"
-              flash.now[:notice2] = @alert
+        if 
+            @alert != []
+            @orders = Order.where(user_id:@current_user.id)
+            flash.now[:notice] = "申し訳ありません。次の商品の在庫が不足しております、再度ご指定ください"
+            flash.now[:notice2] = @alert
 
-              render "stocks/index"
-              return
+            @order_sum = 0
+            @orders.count.times do |i|
+            @goods_master = GoodsMaster.find(@orders[i][:goods_master_id])
+            @order_sum += @goods_master[:price] * @orders[i][:amount]
+            end
+
+            render "stocks/index"
+            return
               
-          end
+        end
 
-          @delivery_c = delivery_c
+        @delivery_c = delivery_c
 
     end
           
@@ -49,8 +51,6 @@ class OrdersController < ApplicationController
                     goods_master_id:params[:goods_master_id][i],
                     quantity_of_stock:(@stock.quantity_of_stock - params[:amount][i].to_i),
                     )
-                # # redirect_to stock_path(@order.goods_master_id)
-    
             end
 
             params[:goods_master_id].count.times do |i| 
@@ -66,9 +66,7 @@ class OrdersController < ApplicationController
 
             end
 
-
-
-            redirect_to root_path,notice: 'ご注文ありがとうございます'
+            redirect_to root_path,notice: 'ご注文ありがとうございました'
             
     end
 
@@ -100,7 +98,9 @@ class OrdersController < ApplicationController
     end
 
     def update
+
         @stock = Stock.find(params[:order][:goods_master_id])
+
         if params[:order][:amount].to_i > @stock.quantity_of_stock.to_i
 
             flash.now[:notice] = "申し訳ありません。以下の通り在庫が不足しております、再度ご指定ください"
@@ -108,14 +108,26 @@ class OrdersController < ApplicationController
 
             @order = Order.find(params[:id])
             @delivery_c = delivery_c
+
     
             render "orders/edit"
             return
 
         end
-        @order = Order.find(params[:id])
 
-        @order = Order.where(id:params[:order][:id]).update(amount:@order.amount.to_i + params[:order][:amount].to_i,delivery_date: Date.today + delivery_c, status: params[:order][:status])
+
+        @order = Order.find(params[:id])
+        if @order.amount.to_i + params[:order][:amount].to_i <= 0 or params[:order][:amount] == "0" or params[:order][:amount] == ""
+            flash.now[:notice] = "数値が間違っていました。お手数ですが再度指定してください"
+            @delivery_c = delivery_c
+
+            render "orders/edit"
+            return
+            # render plain: params.inspect
+        # return
+        end
+
+        @order = Order.where(id:params[:order][:id]).update(amount:@order.amount.to_i + params[:order][:amount].to_i,delivery_date: Date.today + delivery_c, status: "注文中")
         @stock = Stock.where(goods_master_id:params[:order][:goods_master_id]).update(quantity_of_stock:@stock.quantity_of_stock.to_i - params[:order][:amount].to_i)
         # render plain: 
         # @order.amount.inspect
@@ -123,7 +135,8 @@ class OrdersController < ApplicationController
         redirect_to orders_path
         return
         else
-        redirect_to root_path
+
+        redirect_to root_path,notice: "注文を変更しました"
         return
         end
 

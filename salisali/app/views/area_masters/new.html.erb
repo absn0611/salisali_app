@@ -15,7 +15,7 @@
     </tr>
   </table>
 
-  <%= form_with(model: @area_master, local: true, url: area_masters_path(@area_master)) do |f| %>
+  <%= form_with(model:@area_master, local: true, url: area_masters_path) do |f| %>
     <td hidden><%=f.hidden_field :"id", value: params[:id] %></td>
     <td hidden><%=f.hidden_field :"area_name", value: params[:area_name] %></td>
     <td hidden><%=f.hidden_field :"distance_from_store", value: params[:distance_from_store] %></td>
