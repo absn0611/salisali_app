@@ -25,6 +25,8 @@ class AreaMastersController < ApplicationController
 
     def new
         admin_login
+
+        @area_master = AreaMaster.new
         if params[:id] !="" and params[:area_name] != "" and params[:distance_from_store].to_i > 0 and AreaMaster.find_by(id: params[:id]) == nil and AreaMaster.find_by(area_name: params[:area_name]) == nil
       
             render "area_masters/new"
@@ -69,7 +71,7 @@ class AreaMastersController < ApplicationController
     def create
         admin_login
 
-        @area_master = AreaMaster.create(id:params[:id],area_name:params[:area_name],distance_from_store:params[:distance_from_store])
+        @area_master = AreaMaster.create(areamaster_params)
         redirect_to area_masters_path
     end
 
