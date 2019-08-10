@@ -1,4 +1,5 @@
 <h1>エリアマスタ新規登録</h1><br>
+<%= params %>
 <p>この内容でよろしければ確定ボタンを押してください</p>
 
 <h2>新規登録</h2>
@@ -9,16 +10,16 @@
         <th>倉庫からの距離(km)</th>
     </tr>
     <tr>
-        <td><%= params[:id] %></td>  
-        <td><%= params[:area_name] %></td>
-        <td><%= params[:distance_from_store] %></td>
+        <td><%= params[:area_master][:id] %></td>  
+        <td><%= params[:area_master][:area_name] %></td>
+        <td><%= params[:area_master][:distance_from_store] %></td>
     </tr>
   </table>
 
   <%= form_with(model:@area_master, local: true, url: area_masters_path) do |f| %>
-    <td hidden><%=f.hidden_field :"id", value: params[:id] %></td>
-    <td hidden><%=f.hidden_field :"area_name", value: params[:area_name] %></td>
-    <td hidden><%=f.hidden_field :"distance_from_store", value: params[:distance_from_store] %></td>
+    <td hidden><%=f.hidden_field :"id", value: params[:area_master][:id] %></td>
+    <td hidden><%=f.hidden_field :"area_name", value: params[:area_master][:area_name] %></td>
+    <td hidden><%=f.hidden_field :"distance_from_store", value: params[:area_master][:distance_from_store] %></td>
 
     <td><%=f.submit "新規登録する"%></td>
     <% end %>

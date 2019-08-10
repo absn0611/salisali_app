@@ -1,6 +1,8 @@
 class AreaMastersController < ApplicationController
     def index
         admin_login
+        @area_master = AreaMaster.new
+
         @area_masters = AreaMaster.all
     end
 
@@ -25,37 +27,40 @@ class AreaMastersController < ApplicationController
 
     def new
         admin_login
+        @area_master = AreaMaster.new
 
-        # @area_master = AreaMaster.new
-        if params[:id] !="" and params[:area_name] != "" and params[:distance_from_store].to_i > 0 and AreaMaster.find_by(id: params[:id]) == nil and AreaMaster.find_by(area_name: params[:area_name]) == nil
+        # render plain: params.inspect
+        # return
+
+        if params[:area_master][:id] !="" and params[:area_master][:area_name] != "" and params[:area_master][:distance_from_store].to_i > 0 and AreaMaster.find_by(id: params[:area_master][:id]) == nil and AreaMaster.find_by(area_name: params[:area_master][:area_name]) == nil
       
             render "area_masters/new"
             return
     
         else
 
-        if params[:id] == ""
+        if params[:area_master][:id] == ""
             flash.now[:notice] = "エリアコードを指定してください"
         end
   
-        if params[:area_name] == ""
+        if params[:area_master][:area_name] == ""
           flash.now[:notice2] = "エリア名を指定してください"
         end
   
-        if params[:distance_from_store].to_i <= 0
+        if params[:area_master][:distance_from_store].to_i <= 0
             flash.now[:notice3] = "倉庫からの距離を０以上の値で指定してください"
         end
 
-        if AreaMaster.where(id:params[:id]).any?
+        if AreaMaster.where(id:params[:area_master][:id]).any?
             @area_masters = AreaMaster.all
 
-            flash.now[:notice] = params[:id] + "は既に登録されています"
+            flash.now[:notice] = params[:area_master][:id] + "は既に登録されています"
         end
 
-        if AreaMaster.where(area_name:params[:area_name]).any?
+        if AreaMaster.where(area_name:params[:area_master][:area_name]).any?
             @area_masters = AreaMaster.all
 
-            flash.now[:notice2] = params[:area_name] + "は既に登録されています"
+            flash.now[:notice2] = params[:area_master][:area_name] + "は既に登録されています"
         end
         @area_masters = AreaMaster.all
 
@@ -70,6 +75,9 @@ class AreaMastersController < ApplicationController
 
     def create
         admin_login
+
+        render plain: params.inspect
+        return 
 
         @area_master = AreaMaster.create(id: params[:id], area_name: params[:area_name], distance_from_store: params[:distance_from_store])
         redirect_to area_masters_path
