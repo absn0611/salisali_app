@@ -76,10 +76,10 @@ class AreaMastersController < ApplicationController
     def create
         admin_login
 
-        render plain: params.inspect
-        return 
+        # render plain: params.inspect
+        # return 
 
-        @area_master = AreaMaster.create(id: params[:id], area_name: params[:area_name], distance_from_store: params[:distance_from_store])
+        @area_master = AreaMaster.create(areamaster_params)
         redirect_to area_masters_path
     end
 
