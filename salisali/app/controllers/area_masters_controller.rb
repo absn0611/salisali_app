@@ -26,7 +26,7 @@ class AreaMastersController < ApplicationController
     def new
         admin_login
 
-        @area_master = AreaMaster.new
+        # @area_master = AreaMaster.new
         if params[:id] !="" and params[:area_name] != "" and params[:distance_from_store].to_i > 0 and AreaMaster.find_by(id: params[:id]) == nil and AreaMaster.find_by(area_name: params[:area_name]) == nil
       
             render "area_masters/new"
@@ -55,7 +55,7 @@ class AreaMastersController < ApplicationController
         if AreaMaster.where(area_name:params[:area_name]).any?
             @area_masters = AreaMaster.all
 
-            flash.now[:notice] = params[:area_name] + "は既に登録されています"
+            flash.now[:notice2] = params[:area_name] + "は既に登録されています"
         end
         @area_masters = AreaMaster.all
 
@@ -71,7 +71,7 @@ class AreaMastersController < ApplicationController
     def create
         admin_login
 
-        @area_master = AreaMaster.create(areamaster_params)
+        @area_master = AreaMaster.create(id: params[:id], area_name: params[:area_name], distance_from_store: params[:distance_from_store])
         redirect_to area_masters_path
     end
 
