@@ -7,7 +7,7 @@
 </div>
 <% end %>
 <h2>追加/変更</h2>
-<%= form_with(model: @stock, local: true, url: stocks_path(@stocks)) do |f| %>
+<%= form_with(model: @stock, local: true, url: stocks_path) do |f| %>
   <table>
     <tr>
         <th>商品コード</th>

@@ -34,7 +34,7 @@ class StocksController < ApplicationController
     # return
     @goods_master = GoodsMaster.new
 
-    if params[:goods_master][:new_goods]
+    if params[:goods_master] and params[:goods_master][:new_goods]
       if params[:goods_master][:id] !="" and params[:goods_master][:goods_name] != "" and params[:goods_master][:price].to_i > 0 and GoodsMaster.find_by(id: params[:goods_master][:id]) == nil and GoodsMaster.find_by(goods_name: params[:goods_master][:goods_name]) == nil
       
         render "goods_masters/new"
@@ -70,18 +70,21 @@ class StocksController < ApplicationController
         render "stocks/new"
       end
     else
-      # render plain: params[:goods_master][:goods_name].inspect
+      # render plain: params.inspect
       # return
-      params[:goods_master][:goods_master_id].count.times do |i| 
-        if params[:goods_master][:amount][i] == ""
+
+      params[:goods_master_id].count.times do |i| 
+        if params[:amount][i] == ""
         else
-        @stock = Stock.find(params[:goods_master][:goods_master_id][i])
-            @order = Stock.where(goods_master_id:params[:goods_master][:goods_master_id][i]).update(
-                goods_master_id:params[:goods_master][:goods_master_id][i],
-                quantity_of_stock:(@stock.quantity_of_stock + params[:goods_master][:amount][i].to_i)
+        @stock = Stock.find(params[:goods_master_id][i])
+            @order = Stock.where(goods_master_id:params[:goods_master_id][i]).update(
+                goods_master_id:params[:goods_master_id][i],
+                quantity_of_stock:(@stock.quantity_of_stock + params[:amount][i].to_i)
                 )
         end
-      end
+      
+
+    end
       redirect_to new_stock_path
     end
     
