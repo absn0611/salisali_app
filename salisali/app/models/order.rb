@@ -1,5 +1,10 @@
 class Order < ApplicationRecord
 
+  validates :user_id, presence: true
+  validates :goods_master_id, presence: true
+  validates :amount, presence: true
+  validates :delivery_date, presence: true
+  validates :status, presence: true
 
 
 
