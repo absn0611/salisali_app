@@ -45,8 +45,8 @@ class OrdersController < ApplicationController
           
     def create
 
-        render plain: params.inspect
-        return
+        # render plain: params.inspect
+        # return
             
         params[:goods_master_id].count.times do |i| 
             @stock = Stock.find(params[:goods_master_id][i])
