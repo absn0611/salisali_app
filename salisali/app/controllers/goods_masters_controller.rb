@@ -6,18 +6,13 @@ class GoodsMastersController < ApplicationController
 
     def create
         admin_login
-        
-        @goods_master = GoodsMaster.create(
-            id: params[:id],
-            goods_name: params[:goods_name],
-            price: params[:price],
-            about: params[:about],
-            )
 
-        @stock = Stock.create(
-            goods_master_id: params[:id],
-            quantity_of_stock: params[:quantity_of_stock].to_i
-        )
+        # render plain: params.inspect
+        # return
+        
+        @goods_master = GoodsMaster.create(goodsmaster_params)
+
+        @stock = Stock.create(stock_params)
         
         redirect_to new_stock_path
     end
@@ -56,7 +51,7 @@ class GoodsMastersController < ApplicationController
     end
 
     def stock_params
-        params.require(:goods_master).permit(:id)
+        params.require(:goods_master).permit(:id,:quantity_of_stock)
     end
 
     def admin_login

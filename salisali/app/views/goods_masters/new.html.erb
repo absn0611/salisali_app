@@ -14,11 +14,11 @@
         <th>登録数</th>
     </tr>
   <tr>
-  <td><%= params[:id] %></td>  
-  <td><%= params[:goods_name] %></td>
-  <td><%= params[:price] %></td>
-  <td><%= params[:about] %></td>
-  <td><%= params[:quantity_of_stock] %></td>
+  <td><%= params[:goods_master][:id] %></td>  
+  <td><%= params[:goods_master][:goods_name] %></td>
+  <td><%= params[:goods_master][:price] %></td>
+  <td><%= params[:goods_master][:about] %></td>
+  <td><%= params[:goods_master][:quantity_of_stock] %></td>
 
 
 
@@ -32,13 +32,13 @@
   </div>
 
   </table>
-  <%= form_with(model: @goods_master, local: true, url: goods_masters_path(@goods_master)) do |f| %>
-  <td hidden><%=f.hidden_field :"user_id", value: "#{@current_user.id}" %></td>
-  <td hidden><%=f.hidden_field :"id", value: params[:id] %></td>
-  <td hidden><%=f.hidden_field :"goods_name", value: params[:goods_name] %></td>
-  <td hidden><%=f.hidden_field :"price", value: params[:price] %></td>
-  <td hidden><%=f.hidden_field :"about", value: params[:about] %></td>
-  <td hidden><%=f.hidden_field :"quantity_of_stock", value: params[:quantity_of_stock] %></td>
+  <%= form_with(model: @goods_master, local: true, url: goods_masters_path) do |f| %>
+  <td hidden><%=f.hidden_field :"user_id", value: @current_user.id %></td>
+  <td hidden><%=f.hidden_field :"id", value: params[:goods_master][:id] %></td>
+  <td hidden><%=f.hidden_field :"goods_name", value: params[:goods_master][:goods_name] %></td>
+  <td hidden><%=f.hidden_field :"price", value: params[:goods_master][:price] %></td>
+  <td hidden><%=f.hidden_field :"about", value: params[:goods_master][:about] %></td>
+  <td hidden><%=f.hidden_field :"quantity_of_stock", value: params[:goods_master][:quantity_of_stock] %></td>
 
 
   <td><%=f.submit "新規登録する"%></td>

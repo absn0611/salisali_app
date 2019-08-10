@@ -5,7 +5,9 @@ class StocksController < ApplicationController
   def new
 
     admin_login
+    @goods_master = GoodsMaster.new
     @stocks = Stock.all
+
 
   end
 
@@ -28,49 +30,55 @@ class StocksController < ApplicationController
     
     admin_login
 
-    if params[:new_goods]
-      if params[:id] !="" and params[:goods_name] != "" and params[:price].to_i > 0 and GoodsMaster.find_by(id: params[:id]) == nil and GoodsMaster.find_by(goods_name: params[:goods_name]) == nil
+    # render plain: params.inspect
+    # return
+    @goods_master = GoodsMaster.new
+
+    if params[:goods_master][:new_goods]
+      if params[:goods_master][:id] !="" and params[:goods_master][:goods_name] != "" and params[:goods_master][:price].to_i > 0 and GoodsMaster.find_by(id: params[:goods_master][:id]) == nil and GoodsMaster.find_by(goods_name: params[:goods_master][:goods_name]) == nil
       
         render "goods_masters/new"
         return
       else
         @stocks = Stock.all
 
-        if GoodsMaster.find_by(id: params[:id])
+        if GoodsMaster.find_by(id: params[:goods_master][:id])
 
-          flash.now[:notice] = params[:id] + "は既に登録されているため登録できません。"
+          flash.now[:notice] = params[:goods_master][:id] + "は既に登録されているため登録できません。"
         else
           flash.now[:notice] = ""
         end
 
-        if GoodsMaster.find_by(goods_name: params[:goods_name])
+        if GoodsMaster.find_by(goods_name: params[:goods_master][:goods_name])
 
-          flash.now[:notice2] = params[:goods_name] + "は既に登録されているため登録できません。"
+          flash.now[:notice2] = params[:goods_master][:goods_name] + "は既に登録されているため登録できません。"
           
         end
 
-        if params[:id] == ""
+        if params[:goods_master][:id] == ""
           flash.now[:notice] = "商品コードを指定してください"
         end
 
-        if params[:goods_name] == ""
+        if params[:goods_master][:goods_name] == ""
         flash.now[:notice2] = "商品名を指定してください"
         end
 
-        if params[:price].to_i <= 0
+        if params[:goods_master][:price].to_i <= 0
           flash.now[:notice3] = "価格を０以上の値で指定してください"
         end
         
         render "stocks/new"
       end
     else
-      params[:goods_master_id].count.times do |i| 
-        if params[:amount][i] == ""
+      # render plain: params[:goods_master][:goods_name].inspect
+      # return
+      params[:goods_master][:goods_master_id].count.times do |i| 
+        if params[:goods_master][:amount][i] == ""
         else
-        @stock = Stock.find(params[:goods_master_id][i])
-            @order = Stock.where(goods_master_id:params[:goods_master_id][i]).update(
-                goods_master_id:params[:goods_master_id][i],
-                quantity_of_stock:(@stock.quantity_of_stock + params[:amount][i].to_i)
+        @stock = Stock.find(params[:goods_master][:goods_master_id][i])
+            @order = Stock.where(goods_master_id:params[:goods_master][:goods_master_id][i]).update(
+                goods_master_id:params[:goods_master][:goods_master_id][i],
+                quantity_of_stock:(@stock.quantity_of_stock + params[:goods_master][:amount][i].to_i)
                 )
         end
       end

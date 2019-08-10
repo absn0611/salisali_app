@@ -46,7 +46,7 @@
 <br>
 <h2>新規登録</h2>
 
-<%= form_with(model: @stock, local: true, url: stocks_path(@stocks)) do |f| %>
+<%= form_with(model: @goods_master, local: true, url: stocks_path(@stocks)) do |f| %>
 
 
 <table>
@@ -58,9 +58,16 @@
         <th>登録数</th>
     </tr>
   <tr>
-  <td><%=f.text_field :"id", value: params[:id]%></td>  
-  <td><%=f.text_field :"goods_name", value: params[:goods_name]%></td>
-  <td><%=f.number_field :"price", value: params[:price] %></td>
+  <% if params[:goods_master] %>
+  <td><%=f.text_field :"id", value: params[:goods_master][:id]%></td>  
+  <td><%=f.text_field :"goods_name", value: params[:goods_master][:goods_name]%></td>
+  <td><%=f.number_field :"price", value: params[:goods_master][:price] %></td>
+  <% else %>
+  <td><%=f.text_field :"id" %></td>  
+  <td><%=f.text_field :"goods_name" %></td>
+  <td><%=f.number_field :"price" %></td>
+  <% end %>
+
   <td><%=f.text_area :"about" %></td>
   <td><%=f.number_field :"quantity_of_stock", min: 0   %></td>
   <td hidden><%=f.hidden_field :"new_goods", value: "new_goods" %></td>
@@ -74,7 +81,6 @@
 
   <td><%=f.submit "新規登録する"%></td>
   <% end %>
-
 
 
 
