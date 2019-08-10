@@ -2,7 +2,7 @@ class OrdersController < ApplicationController
 
     def index
         admin_login
-        @orders = Order.all.order(created_at: "desc")
+        @orders = Order.all.order(updated_at: "desc")
     end
 
     def new
@@ -120,17 +120,21 @@ class OrdersController < ApplicationController
 
 
         @order = Order.find(params[:id])
-        if @order.amount.to_i + params[:order][:amount].to_i <= 0 or params[:order][:amount] == "0" or params[:order][:amount] == ""
-            flash.now[:notice] = "数値が間違っていました。お手数ですが再度指定してください"
-            @delivery_c = delivery_c
 
-            render "orders/edit"
-            return
-            # render plain: params.inspect
-        # return
+        if @current_user and @current_user.admin == "true"
+        else
+            if @order.amount.to_i + params[:order][:amount].to_i <= 0 or params[:order][:amount] == "0" or params[:order][:amount] == ""
+                flash.now[:notice] = "数値が間違っていました。お手数ですが再度指定してください"
+                @delivery_c = delivery_c
+
+                render "orders/edit"
+                return
+                # render plain: params.inspect
+            # return
+            end
         end
 
-        @order = Order.where(id:params[:order][:id]).update(amount:@order.amount.to_i + params[:order][:amount].to_i,delivery_date: Date.today + delivery_c, status: "注文中")
+        @order = Order.where(id:params[:order][:id]).update(amount:@order.amount.to_i + params[:order][:amount].to_i,delivery_date: Date.today + delivery_c, status: params[:order][:status])
         @stock = Stock.where(goods_master_id:params[:order][:goods_master_id]).update(quantity_of_stock:@stock.quantity_of_stock.to_i - params[:order][:amount].to_i)
         # render plain: 
         # @order.amount.inspect
