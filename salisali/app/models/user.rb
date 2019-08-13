@@ -2,6 +2,11 @@ class User < ApplicationRecord
     has_secure_password validations: true
 
     validates :mail, presence: true, uniqueness: true
+    validates :name, presence: true, uniqueness: true
+    validates :address, presence: true, uniqueness: true
+    validates :area_master, presence: true
+    validates :admin, presence: true
+
     
     def self.new_remember_token
         SecureRandom.urlsafe_base64
