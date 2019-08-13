@@ -1,4 +1,6 @@
 <h1>新規登録</h1><br>
+<%= params[:goods_master][:id] %>
+
 <p>この内容でよろしければ確定ボタンを押してください</p>
 
 <h2>新規登録</h2>
@@ -42,6 +44,13 @@
 
 
   <td><%=f.submit "新規登録する"%></td>
+  <%=link_to '戻る', new_stock_path(
+    id:params[:goods_master][:id],
+    goods_name:params[:goods_master][:goods_name],
+    price:params[:goods_master][:price],
+    quantity_of_stock:params[:goods_master][:quantity_of_stock],
+    about:params[:goods_master][:about]
+    ) %>
   <% end %>
 
 

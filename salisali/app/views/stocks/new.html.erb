@@ -1,4 +1,5 @@
 <h1>商品マスタ/在庫マスタ登録(※登録のためのページです)</h1>
+<%= params %>
 <% if flash[:notice] %>
 <div class="error">
 <%= h(flash[:notice]) %><br>
@@ -62,15 +63,31 @@
   <td><%=f.text_field :"id", value: params[:goods_master][:id]%></td>  
   <td><%=f.text_field :"goods_name", value: params[:goods_master][:goods_name]%></td>
   <td><%=f.number_field :"price", value: params[:goods_master][:price] %></td>
+  <td><%=f.text_area :"about", value: params[:goods_master][:about] %></td>
+  <td><%=f.number_field :"quantity_of_stock", min: 0, value:params[:goods_master][:quantity_of_stock]  %></td>
+  <td hidden><%=f.hidden_field :"new_goods", value: "new_goods" %></td>
+
   <% else %>
+  <% if params[:quantity_of_stock] %>
+  <td><%=f.text_field :"id", value: params[:id] %></td>  
+  <td><%=f.text_field :"goods_name", value: params[:goods_name] %></td>
+  <td><%=f.number_field :"price", value: params[:price] %></td>
+  <td><%=f.text_area :"about", value: params[:price] %></td>
+  <td><%=f.number_field :"quantity_of_stock", min: 0, value:params[:quantity_of_stock]  %></td>
+  <td hidden><%=f.hidden_field :"new_goods", value: "new_goods" %></td>
+  <% else %>
+
   <td><%=f.text_field :"id" %></td>  
   <td><%=f.text_field :"goods_name" %></td>
   <td><%=f.number_field :"price" %></td>
+  <td><%=f.text_area :"about" %></td>
+  <td><%=f.number_field :"quantity_of_stock", min: 0, value:0  %></td>
+
+  <% end %>
   <% end %>
 
-  <td><%=f.text_area :"about" %></td>
-  <td><%=f.number_field :"quantity_of_stock", min: 0, value:0   %></td>
   <td hidden><%=f.hidden_field :"new_goods", value: "new_goods" %></td>
+
 
 
 
