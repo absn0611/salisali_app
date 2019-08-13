@@ -16,23 +16,23 @@ class UsersController < ApplicationController
   def create
     admin_login
 
-    @user_name = User.where(name:params[:user][:name]).any?
-    @user_mail = User.where(mail:params[:user][:mail]).any?
+    if @user_name = User.where(name:params[:user][:name]).any? or @user_mail = User.where(mail:params[:user][:mail]).any?
 
 
-    if @user_name == true
-      flash.now[:notice] = params[:user][:name].to_s + "は既に登録されています"
-    end
+      if @user_name == true
+        flash.now[:notice] = params[:user][:name].to_s + "は既に登録されています"
+      end
 
-    if @user_mail == true
-      flash.now[:notice2] = params[:user][:mail].to_s + "は既に登録されています"
-    end
+      if @user_mail == true
+        flash.now[:notice2] = params[:user][:mail].to_s + "は既に登録されています"
+      end
 
-    @user = User.new
+      @user = User.new
 
-    render "new"
-    # render plain: params[:user][:name].inspect
-    return
+      render "new"
+      # render plain: params[:user][:name].inspect
+      return
+    else
 
 
     
@@ -46,6 +46,7 @@ class UsersController < ApplicationController
         render 'new'
         return
       end
+    end
   end
 
   def edit
