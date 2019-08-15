@@ -31,7 +31,7 @@
             <td>変更できません</td>
             <td>変更できません</td>
             <% else %>
-            <td><%= f.number_field :amount, value:nil%></td>
+            <td><%= f.number_field :amount, value:nil,min:0,max:@order.amount - 1%></td>
             <td><%=link_to "[注文キャンセル]", order_path(@order.id), method: :delete, data: { confirm: @order.goods_master.goods_name + "の注文全てキャンセルしますか？"} %></td>
             <% end %>
 
