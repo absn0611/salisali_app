@@ -1,10 +1,10 @@
 <h1>商品一覧</h1>
-<%= form_with(model: @stock, local: true, url: new_order_path(@stocks), method: :get) do |f| %>
+<%= form_with(model: @stock, local: true, url: new_order_path, method: :get) do |f| %>
   <div class="error">
   <%= h(flash[:notice]) %><br>
   <%= h(flash[:notice2]) %><br>
   </div>
-
+<%=params %>
   <table>
     <tr>
         <th>商品名</th>
@@ -19,15 +19,17 @@
     <td><%= stock.goods_master.goods_name %></td>
     <td><%= stock.goods_master.price %></td>
     <td><%= stock.goods_master.about %></td>
-    <td hidden><%=f.hidden_field :"user_id[]", value: "#{@current_user.id}" %></td>
-    <td hidden><%=f.hidden_field :"goods_name[]", value: "#{stock.goods_master.goods_name}" %></td>
-    <td hidden><%=f.hidden_field :"price[]", value: "#{stock.goods_master.price}" %></td>
-    <td hidden><%=f.hidden_field :"goods_master_id[]", value: "#{stock.goods_master.id}" %></td>
-    <td hidden><%=f.hidden_field :"about[]", value: "#{stock.goods_master.about}" %></td>
+    <td hidden><%=f.hidden_field :"user_id[]", value: @current_user.id %></td>
+    <td hidden><%=f.hidden_field :"goods_name[]", value: stock.goods_master.goods_name %></td>
+    <td hidden><%=f.hidden_field :"price[]", value: stock.goods_master.price %></td>
+    <td hidden><%=f.hidden_field :"goods_master_id[]", value: stock.goods_master.id %></td>
+    <td hidden><%=f.hidden_field :"about[]", value: stock.goods_master.about %></td>
+    <td hidden><%=f.hidden_field :"quantity_of_stock[]", value: stock.quantity_of_stock %></td>
+
     <td>
     <% if params[:amount] %>
     <%=f.number_field :"amount[]", min: 0 ,value:
-    params[:amount][params[:goods_master_id].index("#{stock.goods_master.id}")]
+    params[:amount][params[:goods_master_id].index(stock.goods_master.id)]
     %>
     <% else %>
     <%=f.number_field :"amount[]", min: 0  

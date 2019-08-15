@@ -6,25 +6,25 @@ class OrdersController < ApplicationController
     end
 
     def new
+
+
         if params[:amount].map(&:to_i).sum == 0 or params[:amount].map(&:to_i).sum == nil
             redirect_to root_path, notice: '注文する商品を指定してください' 
             return  
         end
+
           @stocks = Stock.all
           @alert = []
           params[:goods_name].count.times do |i| 
-            @stock = Stock.find(params[:goods_master_id][i])
-              if params[:amount][i].to_i > @stock.quantity_of_stock
+              if params[:amount][i].to_i > params[:quantity_of_stock][i].to_i
                   @alert.push(
-                  params[:goods_name][i].to_s + "の在庫数は" + @stocks[i].quantity_of_stock.to_s + "個です"
+                  params[:goods_name][i].to_s + "の在庫数は" + params[:quantity_of_stock][i].to_s + "個です"
                   )
               end
 
-            # render plain: @stock.quantity_of_stock.inspect
-            # return
                     
-    end
-      
+          end
+        
         if 
             @alert != []
             @orders = Order.where(user_id:@current_user.id)
@@ -36,6 +36,7 @@ class OrdersController < ApplicationController
             @goods_master = GoodsMaster.find(@orders[i][:goods_master_id])
             @order_sum += @goods_master[:price] * @orders[i][:amount]
             end
+            @orders = Order.all.order(updated_at: "desc")
 
             render "stocks/index"
             return
