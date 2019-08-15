@@ -13,12 +13,15 @@ class OrdersController < ApplicationController
           @stocks = Stock.all
           @alert = []
           params[:goods_name].count.times do |i| 
-              
-              if params[:amount][i].to_i > @stocks[i].quantity_of_stock
+            @stock = Stock.find(params[:goods_master_id][i])
+              if params[:amount][i].to_i > @stock.quantity_of_stock
                   @alert.push(
                   params[:goods_name][i].to_s + "の在庫数は" + @stocks[i].quantity_of_stock.to_s + "個です"
                   )
               end
+
+            # render plain: @stock.quantity_of_stock.inspect
+            # return
                     
     end
       

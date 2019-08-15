@@ -60,6 +60,40 @@ class UsersController < ApplicationController
   def update
     admin_login
 
+    @user = User.find(params[:user][:id])
+    @users = User.all
+
+    @presence = User.where(name:params[:user][:name]).any?
+    @presence2 = User.where(mail:params[:user][:mail]).any?
+    @presence3 = User.where(area_master_id:params[:user][:area_master_id]).any?
+
+
+    # render plain: @presence3.inspect
+    # return
+
+    if @presence == true and @user.name != params[:user][:name]
+        flash.now[:notice] = params[:user][:name] + "は既に登録があります"
+
+        render "index"
+        return
+    end
+
+    if @presence2 == true and @user.mail != params[:user][:mail]
+        flash.now[:notice] = params[:user][:mail] + "は既に登録があります"
+
+        render "index"
+        return
+    end
+
+    if @presence3 == false
+      flash.now[:notice] = "エリアコード"  + params[:user][:area_master_id] + "は存在しません"
+
+      render "index"
+      return
+    end
+
+
+
     @user = User.where(id:params[:user][:id]).update(user_params)
     if @current_user.admin == "true"
     redirect_to users_path, notice: params[:user][:name] + 'の情報を更新しました' 

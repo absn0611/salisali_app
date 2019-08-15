@@ -20,9 +20,40 @@ class AreaMastersController < ApplicationController
 
     def update
         admin_login
+
+        @area_master = AreaMaster.find(params[:id])
+        @area_masters = AreaMaster.all
+
+        @presence = AreaMaster.where(id:params[:area_master][:id]).any?
+        @presence2 = AreaMaster.where(area_name:params[:area_master][:area_name]).any?
+
+        # render plain: params[:area_master][:area_name].inspect
+        # return
+
+        if @area_master.id == params[:area_master][:id] and @area_master.area_name == params[:area_master][:area_name] and @area_master.distance_from_store.to_i == params[:area_master][:distance_from_store].to_i
+            redirect_to area_masters_path,notice: "変更箇所はありませんでした"
+            return
+        end
+
+        if @presence == true and @area_master.id != params[:area_master][:id]
+            flash.now[:notice] = params[:area_master][:id] + "は既に登録があります"
+
+            render "index"
+            return
+        end
+
+        if @presence2 == true and @area_master.area_name != params[:area_master][:area_name]
+            flash.now[:notice] = params[:area_master][:area_name] + "は既に登録があります"
+
+            render "index"
+            return
+        end
+
+
+
         @area_master = AreaMaster.where(id: params[:id]).update(areamaster_params)
 
-        redirect_to area_masters_path
+        redirect_to area_masters_path,notice: "変更しました"
     end
 
     def new

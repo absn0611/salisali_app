@@ -1,4 +1,10 @@
 <h1>エリアマスタ</h1>
+<div class="error">
+<%= h(flash[:notice]) %><br>
+<%= h(flash[:notice2]) %><br>
+<%= h(flash[:notice3]) %>
+</div>
+
 <%= params %>
 <h2>変更/削除</h2>
   <table>
@@ -28,13 +34,6 @@
 </table>
 
 <h2>エリアマスタ登録</h2>
-<div class="error">
-<%= h(flash[:notice]) %><br>
-<%= h(flash[:notice2]) %><br>
-<%= h(flash[:notice3]) %>
-
-
-</div>
 <%= form_with(model: @area_master, local: true, url: new_area_master_path(@area_master),method: :get) do |f| %>
 
   <table>
